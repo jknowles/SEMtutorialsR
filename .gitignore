@@ -4,4 +4,5 @@
 # Example code in package build process
 *-Ex.R
 .Rproj.userS
+*.Rproj.user/
 SEMtutorialsR.Rproj
