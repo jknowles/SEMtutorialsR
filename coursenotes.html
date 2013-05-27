@@ -1,0 +1,1914 @@
+<!DOCTYPE html>
+<!-- saved from url=(0014)about:internet -->
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+
+<title>SEM Course Notes</title>
+
+<style type="text/css">
+body, td {
+   font-family: sans-serif;
+   background-color: white;
+   font-size: 12px;
+   margin: 8px;
+}
+
+tt, code, pre {
+   font-family: 'DejaVu Sans Mono', 'Droid Sans Mono', 'Lucida Console', Consolas, Monaco, monospace;
+}
+
+h1 { 
+   font-size:2.2em; 
+}
+
+h2 { 
+   font-size:1.8em; 
+}
+
+h3 { 
+   font-size:1.4em; 
+}
+
+h4 { 
+   font-size:1.0em; 
+}
+
+h5 { 
+   font-size:0.9em; 
+}
+
+h6 { 
+   font-size:0.8em; 
+}
+
+a:visited {
+   color: rgb(50%, 0%, 50%);
+}
+
+pre {	
+   margin-top: 0;
+   max-width: 95%;
+   border: 1px solid #ccc;
+   white-space: pre-wrap;
+}
+
+pre code {
+   display: block; padding: 0.5em;
+}
+
+code.r, code.cpp {
+   background-color: #F8F8F8;
+}
+
+table, td, th {
+  border: none;
+}
+
+blockquote {
+   color:#666666;
+   margin:0;
+   padding-left: 1em;
+   border-left: 0.5em #EEE solid;
+}
+
+hr {
+   height: 0px;
+   border-bottom: none;
+   border-top-width: thin;
+   border-top-style: dotted;
+   border-top-color: #999999;
+}
+
+@media print {
+   * { 
+      background: transparent !important; 
+      color: black !important; 
+      filter:none !important; 
+      -ms-filter: none !important; 
+   }
+
+   body { 
+      font-size:12pt; 
+      max-width:100%; 
+   }
+       
+   a, a:visited { 
+      text-decoration: underline; 
+   }
+
+   hr { 
+      visibility: hidden;
+      page-break-before: always;
+   }
+
+   pre, blockquote { 
+      padding-right: 1em; 
+      page-break-inside: avoid; 
+   }
+
+   tr, img { 
+      page-break-inside: avoid; 
+   }
+
+   img { 
+      max-width: 100% !important; 
+   }
+
+   @page :left { 
+      margin: 15mm 20mm 15mm 10mm; 
+   }
+     
+   @page :right { 
+      margin: 15mm 10mm 15mm 20mm; 
+   }
+
+   p, h2, h3 { 
+      orphans: 3; widows: 3; 
+   }
+
+   h2, h3 { 
+      page-break-after: avoid; 
+   }
+}
+
+</style>
+
+<!-- Styles for R syntax highlighter -->
+<style type="text/css">
+   pre .operator,
+   pre .paren {
+     color: rgb(104, 118, 135)
+   }
+
+   pre .literal {
+     color: rgb(88, 72, 246)
+   }
+
+   pre .number {
+     color: rgb(0, 0, 205);
+   }
+
+   pre .comment {
+     color: rgb(76, 136, 107);
+   }
+
+   pre .keyword {
+     color: rgb(0, 0, 255);
+   }
+
+   pre .identifier {
+     color: rgb(0, 0, 0);
+   }
+
+   pre .string {
+     color: rgb(3, 106, 7);
+   }
+</style>
+
+<!-- R syntax highlighter -->
+<script type="text/javascript">
+var hljs=new function(){function m(p){return p.replace(/&/gm,"&amp;").replace(/</gm,"&lt;")}function f(r,q,p){return RegExp(q,"m"+(r.cI?"i":"")+(p?"g":""))}function b(r){for(var p=0;p<r.childNodes.length;p++){var q=r.childNodes[p];if(q.nodeName=="CODE"){return q}if(!(q.nodeType==3&&q.nodeValue.match(/\s+/))){break}}}function h(t,s){var p="";for(var r=0;r<t.childNodes.length;r++){if(t.childNodes[r].nodeType==3){var q=t.childNodes[r].nodeValue;if(s){q=q.replace(/\n/g,"")}p+=q}else{if(t.childNodes[r].nodeName=="BR"){p+="\n"}else{p+=h(t.childNodes[r])}}}if(/MSIE [678]/.test(navigator.userAgent)){p=p.replace(/\r/g,"\n")}return p}function a(s){var r=s.className.split(/\s+/);r=r.concat(s.parentNode.className.split(/\s+/));for(var q=0;q<r.length;q++){var p=r[q].replace(/^language-/,"");if(e[p]){return p}}}function c(q){var p=[];(function(s,t){for(var r=0;r<s.childNodes.length;r++){if(s.childNodes[r].nodeType==3){t+=s.childNodes[r].nodeValue.length}else{if(s.childNodes[r].nodeName=="BR"){t+=1}else{if(s.childNodes[r].nodeType==1){p.push({event:"start",offset:t,node:s.childNodes[r]});t=arguments.callee(s.childNodes[r],t);p.push({event:"stop",offset:t,node:s.childNodes[r]})}}}}return t})(q,0);return p}function k(y,w,x){var q=0;var z="";var s=[];function u(){if(y.length&&w.length){if(y[0].offset!=w[0].offset){return(y[0].offset<w[0].offset)?y:w}else{return w[0].event=="start"?y:w}}else{return y.length?y:w}}function t(D){var A="<"+D.nodeName.toLowerCase();for(var B=0;B<D.attributes.length;B++){var C=D.attributes[B];A+=" "+C.nodeName.toLowerCase();if(C.value!==undefined&&C.value!==false&&C.value!==null){A+='="'+m(C.value)+'"'}}return A+">"}while(y.length||w.length){var v=u().splice(0,1)[0];z+=m(x.substr(q,v.offset-q));q=v.offset;if(v.event=="start"){z+=t(v.node);s.push(v.node)}else{if(v.event=="stop"){var p,r=s.length;do{r--;p=s[r];z+=("</"+p.nodeName.toLowerCase()+">")}while(p!=v.node);s.splice(r,1);while(r<s.length){z+=t(s[r]);r++}}}}return z+m(x.substr(q))}function j(){function q(x,y,v){if(x.compiled){return}var u;var s=[];if(x.k){x.lR=f(y,x.l||hljs.IR,true);for(var w in x.k){if(!x.k.hasOwnProperty(w)){continue}if(x.k[w] instanceof Object){u=x.k[w]}else{u=x.k;w="keyword"}for(var r in u){if(!u.hasOwnProperty(r)){continue}x.k[r]=[w,u[r]];s.push(r)}}}if(!v){if(x.bWK){x.b="\\b("+s.join("|")+")\\s"}x.bR=f(y,x.b?x.b:"\\B|\\b");if(!x.e&&!x.eW){x.e="\\B|\\b"}if(x.e){x.eR=f(y,x.e)}}if(x.i){x.iR=f(y,x.i)}if(x.r===undefined){x.r=1}if(!x.c){x.c=[]}x.compiled=true;for(var t=0;t<x.c.length;t++){if(x.c[t]=="self"){x.c[t]=x}q(x.c[t],y,false)}if(x.starts){q(x.starts,y,false)}}for(var p in e){if(!e.hasOwnProperty(p)){continue}q(e[p].dM,e[p],true)}}function d(B,C){if(!j.called){j();j.called=true}function q(r,M){for(var L=0;L<M.c.length;L++){if((M.c[L].bR.exec(r)||[null])[0]==r){return M.c[L]}}}function v(L,r){if(D[L].e&&D[L].eR.test(r)){return 1}if(D[L].eW){var M=v(L-1,r);return M?M+1:0}return 0}function w(r,L){return L.i&&L.iR.test(r)}function K(N,O){var M=[];for(var L=0;L<N.c.length;L++){M.push(N.c[L].b)}var r=D.length-1;do{if(D[r].e){M.push(D[r].e)}r--}while(D[r+1].eW);if(N.i){M.push(N.i)}return f(O,M.join("|"),true)}function p(M,L){var N=D[D.length-1];if(!N.t){N.t=K(N,E)}N.t.lastIndex=L;var r=N.t.exec(M);return r?[M.substr(L,r.index-L),r[0],false]:[M.substr(L),"",true]}function z(N,r){var L=E.cI?r[0].toLowerCase():r[0];var M=N.k[L];if(M&&M instanceof Array){return M}return false}function F(L,P){L=m(L);if(!P.k){return L}var r="";var O=0;P.lR.lastIndex=0;var M=P.lR.exec(L);while(M){r+=L.substr(O,M.index-O);var N=z(P,M);if(N){x+=N[1];r+='<span class="'+N[0]+'">'+M[0]+"</span>"}else{r+=M[0]}O=P.lR.lastIndex;M=P.lR.exec(L)}return r+L.substr(O,L.length-O)}function J(L,M){if(M.sL&&e[M.sL]){var r=d(M.sL,L);x+=r.keyword_count;return r.value}else{return F(L,M)}}function I(M,r){var L=M.cN?'<span class="'+M.cN+'">':"";if(M.rB){y+=L;M.buffer=""}else{if(M.eB){y+=m(r)+L;M.buffer=""}else{y+=L;M.buffer=r}}D.push(M);A+=M.r}function G(N,M,Q){var R=D[D.length-1];if(Q){y+=J(R.buffer+N,R);return false}var P=q(M,R);if(P){y+=J(R.buffer+N,R);I(P,M);return P.rB}var L=v(D.length-1,M);if(L){var O=R.cN?"</span>":"";if(R.rE){y+=J(R.buffer+N,R)+O}else{if(R.eE){y+=J(R.buffer+N,R)+O+m(M)}else{y+=J(R.buffer+N+M,R)+O}}while(L>1){O=D[D.length-2].cN?"</span>":"";y+=O;L--;D.length--}var r=D[D.length-1];D.length--;D[D.length-1].buffer="";if(r.starts){I(r.starts,"")}return R.rE}if(w(M,R)){throw"Illegal"}}var E=e[B];var D=[E.dM];var A=0;var x=0;var y="";try{var s,u=0;E.dM.buffer="";do{s=p(C,u);var t=G(s[0],s[1],s[2]);u+=s[0].length;if(!t){u+=s[1].length}}while(!s[2]);if(D.length>1){throw"Illegal"}return{r:A,keyword_count:x,value:y}}catch(H){if(H=="Illegal"){return{r:0,keyword_count:0,value:m(C)}}else{throw H}}}function g(t){var p={keyword_count:0,r:0,value:m(t)};var r=p;for(var q in e){if(!e.hasOwnProperty(q)){continue}var s=d(q,t);s.language=q;if(s.keyword_count+s.r>r.keyword_count+r.r){r=s}if(s.keyword_count+s.r>p.keyword_count+p.r){r=p;p=s}}if(r.language){p.second_best=r}return p}function i(r,q,p){if(q){r=r.replace(/^((<[^>]+>|\t)+)/gm,function(t,w,v,u){return w.replace(/\t/g,q)})}if(p){r=r.replace(/\n/g,"<br>")}return r}function n(t,w,r){var x=h(t,r);var v=a(t);var y,s;if(v){y=d(v,x)}else{return}var q=c(t);if(q.length){s=document.createElement("pre");s.innerHTML=y.value;y.value=k(q,c(s),x)}y.value=i(y.value,w,r);var u=t.className;if(!u.match("(\\s|^)(language-)?"+v+"(\\s|$)")){u=u?(u+" "+v):v}if(/MSIE [678]/.test(navigator.userAgent)&&t.tagName=="CODE"&&t.parentNode.tagName=="PRE"){s=t.parentNode;var p=document.createElement("div");p.innerHTML="<pre><code>"+y.value+"</code></pre>";t=p.firstChild.firstChild;p.firstChild.cN=s.cN;s.parentNode.replaceChild(p.firstChild,s)}else{t.innerHTML=y.value}t.className=u;t.result={language:v,kw:y.keyword_count,re:y.r};if(y.second_best){t.second_best={language:y.second_best.language,kw:y.second_best.keyword_count,re:y.second_best.r}}}function o(){if(o.called){return}o.called=true;var r=document.getElementsByTagName("pre");for(var p=0;p<r.length;p++){var q=b(r[p]);if(q){n(q,hljs.tabReplace)}}}function l(){if(window.addEventListener){window.addEventListener("DOMContentLoaded",o,false);window.addEventListener("load",o,false)}else{if(window.attachEvent){window.attachEvent("onload",o)}else{window.onload=o}}}var e={};this.LANGUAGES=e;this.highlight=d;this.highlightAuto=g;this.fixMarkup=i;this.highlightBlock=n;this.initHighlighting=o;this.initHighlightingOnLoad=l;this.IR="[a-zA-Z][a-zA-Z0-9_]*";this.UIR="[a-zA-Z_][a-zA-Z0-9_]*";this.NR="\\b\\d+(\\.\\d+)?";this.CNR="\\b(0[xX][a-fA-F0-9]+|(\\d+(\\.\\d*)?|\\.\\d+)([eE][-+]?\\d+)?)";this.BNR="\\b(0b[01]+)";this.RSR="!|!=|!==|%|%=|&|&&|&=|\\*|\\*=|\\+|\\+=|,|\\.|-|-=|/|/=|:|;|<|<<|<<=|<=|=|==|===|>|>=|>>|>>=|>>>|>>>=|\\?|\\[|\\{|\\(|\\^|\\^=|\\||\\|=|\\|\\||~";this.ER="(?![\\s\\S])";this.BE={b:"\\\\.",r:0};this.ASM={cN:"string",b:"'",e:"'",i:"\\n",c:[this.BE],r:0};this.QSM={cN:"string",b:'"',e:'"',i:"\\n",c:[this.BE],r:0};this.CLCM={cN:"comment",b:"//",e:"$"};this.CBLCLM={cN:"comment",b:"/\\*",e:"\\*/"};this.HCM={cN:"comment",b:"#",e:"$"};this.NM={cN:"number",b:this.NR,r:0};this.CNM={cN:"number",b:this.CNR,r:0};this.BNM={cN:"number",b:this.BNR,r:0};this.inherit=function(r,s){var p={};for(var q in r){p[q]=r[q]}if(s){for(var q in s){p[q]=s[q]}}return p}}();hljs.LANGUAGES.cpp=function(){var a={keyword:{"false":1,"int":1,"float":1,"while":1,"private":1,"char":1,"catch":1,"export":1,virtual:1,operator:2,sizeof:2,dynamic_cast:2,typedef:2,const_cast:2,"const":1,struct:1,"for":1,static_cast:2,union:1,namespace:1,unsigned:1,"long":1,"throw":1,"volatile":2,"static":1,"protected":1,bool:1,template:1,mutable:1,"if":1,"public":1,friend:2,"do":1,"return":1,"goto":1,auto:1,"void":2,"enum":1,"else":1,"break":1,"new":1,extern:1,using:1,"true":1,"class":1,asm:1,"case":1,typeid:1,"short":1,reinterpret_cast:2,"default":1,"double":1,register:1,explicit:1,signed:1,typename:1,"try":1,"this":1,"switch":1,"continue":1,wchar_t:1,inline:1,"delete":1,alignof:1,char16_t:1,char32_t:1,constexpr:1,decltype:1,noexcept:1,nullptr:1,static_assert:1,thread_local:1,restrict:1,_Bool:1,complex:1},built_in:{std:1,string:1,cin:1,cout:1,cerr:1,clog:1,stringstream:1,istringstream:1,ostringstream:1,auto_ptr:1,deque:1,list:1,queue:1,stack:1,vector:1,map:1,set:1,bitset:1,multiset:1,multimap:1,unordered_set:1,unordered_map:1,unordered_multiset:1,unordered_multimap:1,array:1,shared_ptr:1}};return{dM:{k:a,i:"</",c:[hljs.CLCM,hljs.CBLCLM,hljs.QSM,{cN:"string",b:"'\\\\?.",e:"'",i:"."},{cN:"number",b:"\\b(\\d+(\\.\\d*)?|\\.\\d+)(u|U|l|L|ul|UL|f|F)"},hljs.CNM,{cN:"preprocessor",b:"#",e:"$"},{cN:"stl_container",b:"\\b(deque|list|queue|stack|vector|map|set|bitset|multiset|multimap|unordered_map|unordered_set|unordered_multiset|unordered_multimap|array)\\s*<",e:">",k:a,r:10,c:["self"]}]}}}();hljs.LANGUAGES.r={dM:{c:[hljs.HCM,{cN:"number",b:"\\b0[xX][0-9a-fA-F]+[Li]?\\b",e:hljs.IMMEDIATE_RE,r:0},{cN:"number",b:"\\b\\d+(?:[eE][+\\-]?\\d*)?L\\b",e:hljs.IMMEDIATE_RE,r:0},{cN:"number",b:"\\b\\d+\\.(?!\\d)(?:i\\b)?",e:hljs.IMMEDIATE_RE,r:1},{cN:"number",b:"\\b\\d+(?:\\.\\d*)?(?:[eE][+\\-]?\\d*)?i?\\b",e:hljs.IMMEDIATE_RE,r:0},{cN:"number",b:"\\.\\d+(?:[eE][+\\-]?\\d*)?i?\\b",e:hljs.IMMEDIATE_RE,r:1},{cN:"keyword",b:"(?:tryCatch|library|setGeneric|setGroupGeneric)\\b",e:hljs.IMMEDIATE_RE,r:10},{cN:"keyword",b:"\\.\\.\\.",e:hljs.IMMEDIATE_RE,r:10},{cN:"keyword",b:"\\.\\.\\d+(?![\\w.])",e:hljs.IMMEDIATE_RE,r:10},{cN:"keyword",b:"\\b(?:function)",e:hljs.IMMEDIATE_RE,r:2},{cN:"keyword",b:"(?:if|in|break|next|repeat|else|for|return|switch|while|try|stop|warning|require|attach|detach|source|setMethod|setClass)\\b",e:hljs.IMMEDIATE_RE,r:1},{cN:"literal",b:"(?:NA|NA_integer_|NA_real_|NA_character_|NA_complex_)\\b",e:hljs.IMMEDIATE_RE,r:10},{cN:"literal",b:"(?:NULL|TRUE|FALSE|T|F|Inf|NaN)\\b",e:hljs.IMMEDIATE_RE,r:1},{cN:"identifier",b:"[a-zA-Z.][a-zA-Z0-9._]*\\b",e:hljs.IMMEDIATE_RE,r:0},{cN:"operator",b:"<\\-(?!\\s*\\d)",e:hljs.IMMEDIATE_RE,r:2},{cN:"operator",b:"\\->|<\\-",e:hljs.IMMEDIATE_RE,r:1},{cN:"operator",b:"%%|~",e:hljs.IMMEDIATE_RE},{cN:"operator",b:">=|<=|==|!=|\\|\\||&&|=|\\+|\\-|\\*|/|\\^|>|<|!|&|\\||\\$|:",e:hljs.IMMEDIATE_RE,r:0},{cN:"operator",b:"%",e:"%",i:"\\n",r:1},{cN:"identifier",b:"`",e:"`",r:0},{cN:"string",b:'"',e:'"',c:[hljs.BE],r:0},{cN:"string",b:"'",e:"'",c:[hljs.BE],r:0},{cN:"paren",b:"[[({\\])}]",e:hljs.IMMEDIATE_RE,r:0}]}};
+hljs.initHighlightingOnLoad();
+</script>
+
+
+<!-- MathJax scripts -->
+<script type="text/javascript" src="https://c328740.ssl.cf1.rackcdn.com/mathjax/2.0-latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML">
+</script>
+
+
+
+</head>
+
+<body>
+<h1>SEM Course Notes</h1>
+
+<h2>Professor Dan Bolt</h2>
+
+<h2>Ed Sci 212 1-2:30pm</h2>
+
+<h1>January 22nd, 2012</h1>
+
+<h3>Introduction to Structural Equation Modeling</h3>
+
+<h3>sem1.pdf</h3>
+
+<p>Course notes are available in the notes folder. </p>
+
+<ul>
+<li>Class will use the LISREL model for describing SEM</li>
+<li>Will explore both observed variable path analysis and latent variable/mixed variable analysis</li>
+<li>SEM at its heart is about relationships &ndash; matrices of variances and covariances, so matrix algebra is important</li>
+<li>Kline text is the main text for the course</li>
+</ul>
+
+<p>** Homework is a two week due date from date it is given **</p>
+
+<p>** Final project is one month before finals part 1 is due; part 2 due during finals week**</p>
+
+<p><a href="http://r.789695.n4.nabble.com/Structural-equation-modeling-in-R-lavaan-sem-td3409642.html">Longitudinal analysis in lavaan</a></p>
+
+<h4>Introduction to SEM</h4>
+
+<p>In SEM we think of correlations and covariances among variables are the units we are interested in analyzing, not individual observations and cases.</p>
+
+<p>In terms of model fit, we are always interested in how well the model recovers the covariance matrix. </p>
+
+<p>In OLS we estimate an intercept, a slope, and a variance to minimize the sum of squares.</p>
+
+<p>SEM does something similar, but instead we estimate three parameters (a coefficient for how <em>x</em> predicts <em>y</em>, a variance for <em>x</em>, and a variance for error <em>\( \zeta \)</em>)</p>
+
+<p>This is important because SEM models usually comprise a network of regression equations. The goal is to estimate parameters in a whole system of equations that accounts for the covariances between the observed variables.</p>
+
+<pre><code class="r">library(lavaan)
+</code></pre>
+
+<pre><code>## Loading required package: MASS
+</code></pre>
+
+<pre><code>## Loading required package: boot
+</code></pre>
+
+<pre><code>## Loading required package: mnormt
+</code></pre>
+
+<pre><code>## Loading required package: pbivnorm
+</code></pre>
+
+<pre><code>## Loading required package: quadprog
+</code></pre>
+
+<pre><code>## This is lavaan 0.5-11
+</code></pre>
+
+<pre><code>## lavaan is BETA software! Please report any bugs.
+</code></pre>
+
+<pre><code class="r">
+day1matrix &lt;- matrix(c(1, 0, 0, 0.6, 1, 0, 0.33, 0.63, 1), 3, 3, byrow = TRUE)
+
+colnames(day1matrix) &lt;- rownames(day1matrix) &lt;- c(&quot;ILL&quot;, &quot;IMM&quot;, &quot;DEP&quot;)
+
+myN &lt;- 500
+print(day1matrix)
+</code></pre>
+
+<pre><code>##      ILL  IMM DEP
+## ILL 1.00 0.00   0
+## IMM 0.60 1.00   0
+## DEP 0.33 0.63   1
+</code></pre>
+
+<pre><code class="r"># ILL = illness IMM= immune system DEP= depression
+</code></pre>
+
+<p>We could fit two models to this data:</p>
+
+<ol>
+<li>DEP influences IMM influences ILL</li>
+<li>IMM influences ILL influences DEP</li>
+</ol>
+
+<pre><code class="r">
+day1mod1 &lt;- &quot;ILL ~ IMM\nIMM ~ DEP&quot;
+
+day1mod1fit &lt;- sem(day1mod1, sample.cov = day1matrix, sample.nobs = 500)
+
+day1mod2 &lt;- &quot;DEP ~ ILL\nILL ~ IMM&quot;
+
+day1mod2fit &lt;- sem(day1mod2, sample.cov = day1matrix, sample.nobs = 500)
+
+summary(day1mod1fit)
+</code></pre>
+
+<pre><code>## lavaan (0.5-11) converged normally after  12 iterations
+## 
+##   Number of observations                           500
+## 
+##   Estimator                                         ML
+##   Minimum Function Test Statistic                2.994
+##   Degrees of freedom                                 1
+##   P-value (Chi-square)                           0.084
+## 
+## Parameter estimates:
+## 
+##   Information                                 Expected
+##   Standard Errors                             Standard
+## 
+##                    Estimate  Std.err  Z-value  P(&gt;|z|)
+## Regressions:
+##   ILL ~
+##     IMM               0.600    0.036   16.771    0.000
+##   IMM ~
+##     DEP               0.630    0.035   18.140    0.000
+## 
+## Variances:
+##     ILL               0.639    0.040
+##     IMM               0.602    0.038
+</code></pre>
+
+<pre><code class="r">print(day1mod1fit)
+</code></pre>
+
+<pre><code>## lavaan (0.5-11) converged normally after  12 iterations
+## 
+##   Number of observations                           500
+## 
+##   Estimator                                         ML
+##   Minimum Function Test Statistic                2.994
+##   Degrees of freedom                                 1
+##   P-value (Chi-square)                           0.084
+</code></pre>
+
+<pre><code class="r">summary(day1mod2fit)
+</code></pre>
+
+<pre><code>## lavaan (0.5-11) converged normally after   9 iterations
+## 
+##   Number of observations                           500
+## 
+##   Estimator                                         ML
+##   Minimum Function Test Statistic              198.180
+##   Degrees of freedom                                 1
+##   P-value (Chi-square)                           0.000
+## 
+## Parameter estimates:
+## 
+##   Information                                 Expected
+##   Standard Errors                             Standard
+## 
+##                    Estimate  Std.err  Z-value  P(&gt;|z|)
+## Regressions:
+##   DEP ~
+##     ILL               0.330    0.042    7.817    0.000
+##   ILL ~
+##     IMM               0.600    0.036   16.771    0.000
+## 
+## Variances:
+##     DEP               0.889    0.056
+##     ILL               0.639    0.040
+</code></pre>
+
+<pre><code class="r">print(day1mod2fit)
+</code></pre>
+
+<pre><code>## lavaan (0.5-11) converged normally after   9 iterations
+## 
+##   Number of observations                           500
+## 
+##   Estimator                                         ML
+##   Minimum Function Test Statistic              198.180
+##   Degrees of freedom                                 1
+##   P-value (Chi-square)                           0.000
+</code></pre>
+
+<p>We have failed to show that the model does not fit, that is, there is no evidence from the data to indicate model I is inappropriate. With model II, we do reject the null hypothesis, which is that model II fits the data. </p>
+
+<p>Suppose model III comes along:</p>
+
+<pre><code class="r"># library(psych)
+day1mod3 &lt;- &quot;DEP ~ IMM\nIMM ~ ILL&quot;
+
+day1mod3fit &lt;- sem(day1mod3, sample.cov = day1matrix, sample.nobs = 500)
+print(day1mod3fit)
+</code></pre>
+
+<pre><code>## lavaan (0.5-11) converged normally after  12 iterations
+## 
+##   Number of observations                           500
+## 
+##   Estimator                                         ML
+##   Minimum Function Test Statistic                2.994
+##   Degrees of freedom                                 1
+##   P-value (Chi-square)                           0.084
+</code></pre>
+
+<pre><code class="r">summary(day1mod3fit)
+</code></pre>
+
+<pre><code>## lavaan (0.5-11) converged normally after  12 iterations
+## 
+##   Number of observations                           500
+## 
+##   Estimator                                         ML
+##   Minimum Function Test Statistic                2.994
+##   Degrees of freedom                                 1
+##   P-value (Chi-square)                           0.084
+## 
+## Parameter estimates:
+## 
+##   Information                                 Expected
+##   Standard Errors                             Standard
+## 
+##                    Estimate  Std.err  Z-value  P(&gt;|z|)
+## Regressions:
+##   DEP ~
+##     IMM               0.630    0.035   18.140    0.000
+##   IMM ~
+##     ILL               0.600    0.036   16.771    0.000
+## 
+## Variances:
+##     DEP               0.602    0.038
+##     IMM               0.639    0.040
+</code></pre>
+
+<pre><code class="r"># lavaan.diagram(day1mod1fit,simple=FALSE)
+</code></pre>
+
+<p>This shows that model I is not the only model that fits the data. Model III fits the data as well. So in this case we cannot use the data to distinguish between these models, but we can use theory.</p>
+
+<p>In this example it only makes sense that the IMMUNE system should be influencing ILLNESS, and that the relationship should not run in the other direction.</p>
+
+<p>SEM can account for measurement error by having multiple measures to allow the construction of a latent variable to examine the relationship of our constructs, and not their measurements alone. </p>
+
+<h1>January 27th, 2012</h1>
+
+<h3>Matrix Algebra Review</h3>
+
+<h3>sem2.pdf</h3>
+
+<p>Matrix algebra is a cornerstone of the LISREL model. </p>
+
+<p>Square matrices are easy.</p>
+
+<pre><code class="r">mat1 &lt;- matrix(c(1, 0, 0, 0.6, 1, 0, 0.33, 0.63, 1), 3, 3, byrow = TRUE)
+
+mat2 &lt;- matrix(c(7, 0, 0, 0.4, 2.8, 0, 0.3, 0.9, 1.3), 3, 3, byrow = TRUE)
+
+# Multiply
+mat1 %*% mat2
+</code></pre>
+
+<pre><code>##       [,1]  [,2] [,3]
+## [1,] 7.000 0.000  0.0
+## [2,] 4.600 2.800  0.0
+## [3,] 2.862 2.664  1.3
+</code></pre>
+
+<pre><code class="r">
+# Transpose
+t(mat1)
+</code></pre>
+
+<pre><code>##      [,1] [,2] [,3]
+## [1,]    1  0.6 0.33
+## [2,]    0  1.0 0.63
+## [3,]    0  0.0 1.00
+</code></pre>
+
+<pre><code class="r">
+# Transpose and multiply
+
+t(mat1) %*% mat2
+</code></pre>
+
+<pre><code>##       [,1]  [,2]  [,3]
+## [1,] 7.339 1.977 0.429
+## [2,] 0.589 3.367 0.819
+## [3,] 0.300 0.900 1.300
+</code></pre>
+
+<p>Non-square matrices</p>
+
+<pre><code class="r">mat3 &lt;- matrix(c(1, 0, 0, 0.6, 1, 0, 0.33, 0.63, 1), 3, 3, byrow = TRUE)
+
+mat4 &lt;- matrix(c(7, 0, 0.4, 2.8, 0.3, 0.9), 3, 2, byrow = TRUE)
+
+mat3 %*% mat4
+</code></pre>
+
+<pre><code>##       [,1]  [,2]
+## [1,] 7.000 0.000
+## [2,] 4.600 2.800
+## [3,] 2.862 2.664
+</code></pre>
+
+<pre><code class="r"># works
+mat4 %*% mat3
+</code></pre>
+
+<pre><code>## Error: non-conformable arguments
+</code></pre>
+
+<pre><code class="r"># does not
+
+mat4 %*% t(mat3)
+</code></pre>
+
+<pre><code>## Error: non-conformable arguments
+</code></pre>
+
+<pre><code class="r"># does not
+
+t(mat4) %*% mat3
+</code></pre>
+
+<pre><code>##       [,1]  [,2] [,3]
+## [1,] 7.339 0.589  0.3
+## [2,] 1.977 3.367  0.9
+</code></pre>
+
+<p>In R we can also take covariances. </p>
+
+<pre><code class="r">vec1 &lt;- c(1, 4, 5, -2)  # mu = 2
+vec2 &lt;- c(8, 14, 10, 4)  # mu = 9
+mu1 &lt;- mean(vec1)
+mu2 &lt;- mean(vec2)
+n &lt;- length(vec1)
+
+mycov &lt;- n^-1 * sum((vec1 - mu1) * (vec2 - mu2))
+mycov
+</code></pre>
+
+<pre><code>## [1] 8.5
+</code></pre>
+
+<pre><code class="r">
+# In R this is different since n-1 is used
+cov(vec1, vec2, method = &quot;pearson&quot;)
+</code></pre>
+
+<pre><code>## [1] 11.33
+</code></pre>
+
+<p>Be careful in R, we need a different formula to do this:</p>
+
+<pre><code class="r">cov_adj &lt;- function(x, y, ...) {
+    mu1 &lt;- mean(x)
+    mu2 &lt;- mean(y)
+    n &lt;- length(x)
+    mycov &lt;- n^-1 * sum((x - mu1) * (y - mu2))
+    print(mycov)
+}
+
+cov_adj(vec1, vec2)
+</code></pre>
+
+<pre><code>## [1] 8.5
+</code></pre>
+
+<p>The variance of a variable is the covariance of that variable with itself. This is represented on the diagonal of the variance-covariance matrix. Variances always have to be positive. A variance of 0 means the variable is a constant.</p>
+
+<p>A correlation simply divides the covariances by the square root of the variance for each variable.</p>
+
+<pre><code class="r">sig1 &lt;- sd(vec1)
+sig2 &lt;- sd(vec2)
+mycor &lt;- n^-1 * sum(((vec1 - mu1)/sig1) * (vec2 - mu2)/sig2)
+mycor
+</code></pre>
+
+<pre><code>## [1] 0.6456
+</code></pre>
+
+<pre><code class="r">
+cor(vec1, vec2)
+</code></pre>
+
+<pre><code>## [1] 0.8608
+</code></pre>
+
+<p>We see again that in R the correlation is using a funky denominator (which only matters in small group sizes).</p>
+
+<pre><code class="r"># THIS IS WRONG!
+cor_adj &lt;- function(x, y, ...) {
+    mu1 &lt;- mean(x)
+    mu2 &lt;- mean(y)
+    n &lt;- length(x)
+    sig1 &lt;- sqrt(sum(x^2 - mu1))
+    sig2 &lt;- sqrt(sum(y^2 - mu2))
+    mycor &lt;- n^-1 * sum(((x - mu1)/sig1) * ((y - mu2)/sig2))
+    print(mycor)
+}
+
+cor_adj(vec1, vec2)
+
+</code></pre>
+
+<h4>Consider Regression</h4>
+
+<p>\[ y = \alpha + \gamma x + \zeta \]</p>
+
+<p>We want to look at what the \( cov(x,y) \) is that can estimate the parameters of this regression. How can we reparameterize it? We have two variables \( x \) and \( y \) and we also have a variance of \( \zeta \) known as \( \psi \). The variance of \( x \) is represented as \( \phi \).</p>
+
+<p>Now we can rewrite the first equation above as:</p>
+
+<p>\[ cov(x,y) = cov(x, \alpha + \gamma x + \zeta) \]</p>
+
+<p>We can apply covariance rules to rewrite this as:</p>
+
+<p>\[ cov(x,y) = cov(x,\alpha) + cov(x, \gamma x) + cov(x,\zeta) \]</p>
+
+<p>Since \( \alpha \) is a parameter, and a constant, this reduces to 0, because of the first rule of covariances (any variable&#39;s covariance with a constant is 0). The second covariance reduces to \( \gamma * \phi \). In regression we assume the final \( cov(x,\zeta) \)$ is 0 - by assumption. </p>
+
+<p>In the end if this model is true, then the \( cov(x,y) = \gamma * \phi \), or \( \gamma \) multiplied by the variance of \( var(x) \).</p>
+
+<pre><code class="r"># create an identity matrix
+diag(5)
+</code></pre>
+
+<pre><code>##      [,1] [,2] [,3] [,4] [,5]
+## [1,]    1    0    0    0    0
+## [2,]    0    1    0    0    0
+## [3,]    0    0    1    0    0
+## [4,]    0    0    0    1    0
+## [5,]    0    0    0    0    1
+</code></pre>
+
+<pre><code class="r">
+# Transpose
+mat1
+</code></pre>
+
+<pre><code>##      [,1] [,2] [,3]
+## [1,] 1.00 0.00    0
+## [2,] 0.60 1.00    0
+## [3,] 0.33 0.63    1
+</code></pre>
+
+<pre><code class="r">t(mat1)
+</code></pre>
+
+<pre><code>##      [,1] [,2] [,3]
+## [1,]    1  0.6 0.33
+## [2,]    0  1.0 0.63
+## [3,]    0  0.0 1.00
+</code></pre>
+
+<pre><code class="r">
+# Inverse
+solve(mat1)
+</code></pre>
+
+<pre><code>##        [,1]  [,2] [,3]
+## [1,]  1.000  0.00    0
+## [2,] -0.600  1.00    0
+## [3,]  0.048 -0.63    1
+</code></pre>
+
+<h1>January 29th, 2012</h1>
+
+<h3>The LISREL Model</h3>
+
+<h3>sem3.pdf</h3>
+
+<p>Two model types in LISREL: a <strong>structural</strong> model (sometimes called latent variable model) and a <strong>measurement</strong> model.</p>
+
+<p>The structural part describes the relationships between the latent variable, while the measurement part describes how latent variables are related to observed variables. </p>
+
+<p>The model is concerned with the causal associations among the latent variables. </p>
+
+<p>Placeholder for real LISREL model image below:</p>
+
+<pre><code>## Dev mode: ON
+</code></pre>
+
+<pre><code>## Loading required package: qgraph
+</code></pre>
+
+<pre><code>## Loading Tcl/Tk interface ...
+</code></pre>
+
+<pre><code>## done
+</code></pre>
+
+<pre><code>## This is semPlot 0.3.1
+</code></pre>
+
+<pre><code>## semPlot is BETA software! Please report any bugs.
+</code></pre>
+
+<p><img src="data:image/png;base64,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" alt="plot of chunk LISRELplot"/> </p>
+
+<pre><code>## Dev mode: OFF
+</code></pre>
+
+<p>Key components are circles for latent variables, squares/rectangles for observed variables, path arrows for connections between them, and coefficients between them.</p>
+
+<p>In LISREL we make a distinction between <strong>endogenous</strong> and <strong>exogenous</strong> variables. Variables which are <strong>endogenous</strong> are predicted by another variable in the model, <strong>exogenous</strong> variables are not predicted by another variable. </p>
+
+<h4>Four Coefficient Matrices</h4>
+
+<p>\[ \eta=\beta_{\eta}+\Gamma \xi + \zeta \]
+\[ x=\delta_{x} \psi + \delta \]
+\[ y=\delta_{y} \eta + \epsilon \]</p>
+
+<p>In this model we have four coefficient matrices and we can specify them using equations above. We have other matrices as well that we can use to understand the model</p>
+
+<h4>Covariance Matrices</h4>
+
+<p>Four square symmetric matrices that are part of the models, for \( \xi \), \( \zeta \), for \( \delta \) and \( \epsilon \) terms. </p>
+
+<p>The matrix of \( \zeta \) s is defined by the number of \( \zeta \) s and is known as the \( \Psi \) matrix. </p>
+
+<p>The matrix of \( \xi \) s is known as the, defined by the number of \( \xi \) s we have. This is known as the \( \Phi \) matrix. </p>
+
+<p>The matrix of \( \delta \) is known as \( \theta_{\delta} \). This is defined by the number of \( \delta \) terms in the model. </p>
+
+<p>The matrix for the \( \epsilon \) s is known as the \( \theta_{\epsilon} \) matrix. This is defined by the number of \( \epsilon \) terms. The diagonal has all the variances, the off diagonal includes any relationships between the \( \epsilon \) terms that are &ldquo;unanalyzed associations&rdquo;.</p>
+
+<p>\[ p = number of ys \]
+\[ q = number of xs \]
+\[ m = number of \eta 's \]
+\[ n = number of \xi 's \]</p>
+
+<h1>February 5th, 2013</h1>
+
+<h3>LISREL Notation</h3>
+
+<h3>sem5.pdf</h3>
+
+<p>In a measurement model, every latent variable is an exogenous latent variable. </p>
+
+<pre><code class="r">
+model2 &lt;- &quot;\ninvisible(\&quot;.BeGiN_TiDy_IdEnTiFiEr_HaHaHa# latent variable definitions.HaHaHa_EnD_TiDy_IdEnTiFiEr\&quot;)\nind60 =~ x1 + x2 + x3\ndem60 =~ y1 + a*y2 + b*y3 + c*y4\ndem65 =~ y5 + a*y6 + b*y7 + c*y8\ninvisible(\&quot;.BeGiN_TiDy_IdEnTiFiEr_HaHaHa.HaHaHa_EnD_TiDy_IdEnTiFiEr\&quot;)\ninvisible(\&quot;.BeGiN_TiDy_IdEnTiFiEr_HaHaHa# residual correlations.HaHaHa_EnD_TiDy_IdEnTiFiEr\&quot;)\ny1 ~~ y5\ny2 ~~ y4 + y6\ny3 ~~ y7\ny4 ~~ y8\ny6 ~~ y8\n&quot;
+
+fit2 &lt;- sem(model2, data = PoliticalDemocracy)
+</code></pre>
+
+<pre><code>## Error: 1:89: unexpected symbol 1: ~
+## y5+a*y6+b*y7+c*y8invisible(&quot;.BeGiN_TiDy_IdEnTiFiEr_HaHaHa.HaHaHa_EnD_TiDy_IdEnTiFiEr&quot;)invisible
+## ^
+</code></pre>
+
+<pre><code class="r">semPaths(fit2, whatLabels = &quot;est&quot;, style = &quot;lisrel&quot;, residuals = TRUE)
+</code></pre>
+
+<pre><code>## Error: object &#39;fit2&#39; not found
+</code></pre>
+
+<p>No longer need a \( \Beta \) matrix, no \( \Psi \) matrix, and no \( \Gamma \) matrix. Also the \( \lambda_{y} \) matrix is no longer necessary because there are no endogenous latent variables in the model, and we are not making any predictions. </p>
+
+<p>Three remaining matrices that we need are the \( \theta^{\delta} \), the \( \Phi \), and the \( \lambda_{x} \) matrices. </p>
+
+<h3>Observed Variable Path Analysis</h3>
+
+<p>In this analysis we assume the variables are measured without error. </p>
+
+<pre><code class="r">model3 &lt;- &quot;\ninvisible(\&quot;.BeGiN_TiDy_IdEnTiFiEr_HaHaHa# latent variable definitions.HaHaHa_EnD_TiDy_IdEnTiFiEr\&quot;)\ny1 ~  x1 + x2 + x3\ny2 ~ y1 + y2 + y3\ninvisible(\&quot;.BeGiN_TiDy_IdEnTiFiEr_HaHaHa.HaHaHa_EnD_TiDy_IdEnTiFiEr\&quot;)\ninvisible(\&quot;.BeGiN_TiDy_IdEnTiFiEr_HaHaHa# residual correlations y1 ~~ y5 y2 ~~ y4 + y6 y3 ~~ y7 y4 ~~ y8 y6 ~~ y8.HaHaHa_EnD_TiDy_IdEnTiFiEr\&quot;)\n&quot;
+
+fit3 &lt;- sem(model3, data = PoliticalDemocracy)
+</code></pre>
+
+<pre><code>## Error: 1:80: unexpected symbol 1: ~
+## y1+y2+y3invisible(&quot;.BeGiN_TiDy_IdEnTiFiEr_HaHaHa.HaHaHa_EnD_TiDy_IdEnTiFiEr&quot;)invisible
+## ^
+</code></pre>
+
+<pre><code class="r">semPaths(fit3, whatLabels = &quot;est&quot;, style = &quot;lisrel&quot;, residuals = TRUE)
+</code></pre>
+
+<pre><code>## Error: object &#39;fit3&#39; not found
+</code></pre>
+
+<p>For path analysis we only need our \( \Beta \), \( \Gamma \), \( \phi \) and \( \Psi \) matrices. </p>
+
+<p>X or exogenous variables are variables with arrows exiting them, endogenous or y variables are variables with arrows entering them.</p>
+
+<p>N * (N+1) / 2 gives you the size of the variance, covariance matrix. </p>
+
+<p>E.g.  4 variables = (4*5/20) = 10 </p>
+
+<h1>February 7th, 2013</h1>
+
+<h3>A LISREL Model</h3>
+
+<h3>sem6.pdf</h3>
+
+<p>This class we will look at a LISREL model of political democracy</p>
+
+<pre><code class="r">data(PoliticalDemocracy)
+names(PoliticalDemocracy)
+</code></pre>
+
+<pre><code>##  [1] &quot;y1&quot; &quot;y2&quot; &quot;y3&quot; &quot;y4&quot; &quot;y5&quot; &quot;y6&quot; &quot;y7&quot; &quot;y8&quot; &quot;x1&quot; &quot;x2&quot; &quot;x3&quot;
+</code></pre>
+
+<p>Below, this should be the model spelled out for <code>lavaan</code>:</p>
+
+<pre><code class="r">model &lt;- &#39; 
+  # latent variable definitions
+     ind60 =~ x1 + x2 + x3
+     dem60 =~ y1 + y2 + y3 + y4
+     dem65 =~ y5 + y6 + y7 + y8
+
+  # regressions
+    dem60 ~ ind60
+    dem65 ~ ind60 + dem60
+
+  # residual correlations
+    y1 ~~ y5
+    y2 ~~ y4 + y6
+    y3 ~~ y7
+    y4 ~~ y8
+    y6 ~~ y8
+&#39;
+</code></pre>
+
+<p>And here is the call to fit the model:</p>
+
+<pre><code class="r">fit1 &lt;- sem(model, data = PoliticalDemocracy, representation = &quot;LISREL&quot;, mimic = &quot;EQS&quot;)
+# LISREL gives us compatible output
+myplot &lt;- semPaths(fit1, whatLabels = &quot;est&quot;, style = &quot;lisrel&quot;, residuals = TRUE)
+</code></pre>
+
+<p><img src="data:image/png;base64,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" alt="plot of chunk polidemmodelfit"/> </p>
+
+<pre><code class="r">
+myplot$labels[grepl(&quot;d65&quot;, myplot$labels)] &lt;- paste0(&quot;*x&quot;, 1)
+myplot$labels[!grepl(&quot;x|y|z&quot;, myplot$labels)] &lt;- paste0(&quot;*h&quot;, 1:2)
+# myplot$labels[grepl(&#39;x&#39;,myplot$labels)] &lt;- paste0(&#39;*n&#39;,1:3)
+qgraph(myplot)
+</code></pre>
+
+<p><img src="data:image/png;base64,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" alt="plot of chunk polidemmodelfit"/> </p>
+
+<p>Let&#39;s inspect the output. For S4 objects we need to see what we get</p>
+
+<pre><code class="r">slotNames(fit1)
+</code></pre>
+
+<pre><code>## [1] &quot;call&quot;        &quot;timing&quot;      &quot;Options&quot;     &quot;ParTable&quot;    &quot;Data&quot;       
+## [6] &quot;SampleStats&quot; &quot;Model&quot;       &quot;Cache&quot;       &quot;Fit&quot;
+</code></pre>
+
+<pre><code class="r">slotNames(fit1@Model)
+</code></pre>
+
+<pre><code>##  [1] &quot;GLIST&quot;            &quot;dimNames&quot;         &quot;isSymmetric&quot;     
+##  [4] &quot;mmSize&quot;           &quot;representation&quot;   &quot;meanstructure&quot;   
+##  [7] &quot;categorical&quot;      &quot;ngroups&quot;          &quot;nmat&quot;            
+## [10] &quot;nvar&quot;             &quot;num.idx&quot;          &quot;th.idx&quot;          
+## [13] &quot;nx.free&quot;          &quot;nx.unco&quot;          &quot;nx.user&quot;         
+## [16] &quot;m.free.idx&quot;       &quot;x.free.idx&quot;       &quot;m.unco.idx&quot;      
+## [19] &quot;x.unco.idx&quot;       &quot;m.user.idx&quot;       &quot;x.user.idx&quot;      
+## [22] &quot;x.def.idx&quot;        &quot;x.ceq.idx&quot;        &quot;x.cin.idx&quot;       
+## [25] &quot;eq.constraints&quot;   &quot;eq.constraints.K&quot; &quot;def.function&quot;    
+## [28] &quot;ceq.function&quot;     &quot;ceq.jacobian&quot;     &quot;cin.function&quot;    
+## [31] &quot;cin.jacobian&quot;     &quot;con.jac&quot;          &quot;con.lambda&quot;      
+## [34] &quot;nexo&quot;             &quot;fixed.x&quot;
+</code></pre>
+
+<pre><code class="r">names(fit1@Model@GLIST)
+</code></pre>
+
+<pre><code>## [1] &quot;lambda&quot; &quot;theta&quot;  &quot;psi&quot;    &quot;beta&quot;
+</code></pre>
+
+<pre><code class="r">fit1@Model@GLIST$beta
+</code></pre>
+
+<pre><code>##        [,1]   [,2] [,3]
+## [1,] 0.0000 0.0000    0
+## [2,] 1.4830 0.0000    0
+## [3,] 0.5723 0.8373    0
+</code></pre>
+
+<pre><code class="r">slotNames(fit1@SampleStats)
+</code></pre>
+
+<pre><code>##  [1] &quot;CAT&quot;          &quot;var&quot;          &quot;cov&quot;          &quot;mean&quot;        
+##  [5] &quot;th&quot;           &quot;th.nox&quot;       &quot;th.idx&quot;       &quot;th.names&quot;    
+##  [9] &quot;slopes&quot;       &quot;cov.x&quot;        &quot;bifreq&quot;       &quot;nobs&quot;        
+## [13] &quot;ntotal&quot;       &quot;ngroups&quot;      &quot;icov&quot;         &quot;cov.log.det&quot; 
+## [17] &quot;WLS.obs&quot;      &quot;WLS.V&quot;        &quot;NACOV&quot;        &quot;missing.flag&quot;
+## [21] &quot;missing&quot;      &quot;missing.h1&quot;
+</code></pre>
+
+<pre><code class="r">fit1@SampleStats@cov
+</code></pre>
+
+<pre><code>## [[1]]
+##         [,1]   [,2]   [,3]   [,4]    [,5]    [,6]   [,7]  [,8]    [,9]
+##  [1,] 0.5371 0.9904 0.8234 0.7344  0.6195  0.7869  1.150 1.082  0.8528
+##  [2,] 0.9904 2.2821 1.8061 1.2734  1.4913  1.5519  2.241 2.064  1.8055
+##  [3,] 0.8234 1.8061 1.9760 0.9115  1.1698  1.0391  1.838 1.583  1.5721
+##  [4,] 0.7344 1.2734 0.9115 6.8786  6.2514  5.8388  6.089 5.064  5.7458
+##  [5,] 0.6195 1.4913 1.1698 6.2514 15.5798  5.8386  9.509 5.603  9.3863
+##  [6,] 0.7869 1.5519 1.0391 5.8388  5.8386 10.7642  6.688 4.939  4.7274
+##  [7,] 1.1505 2.2410 1.8380 6.0886  9.5086  6.6879 11.219 5.702  7.4422
+##  [8,] 1.0816 2.0637 1.5835 5.0638  5.6031  4.9390  5.702 6.826  4.9768
+##  [9,] 0.8528 1.8055 1.5721 5.7458  9.3863  4.7274  7.442 4.977 11.3753
+## [10,] 0.9368 1.9956 1.6260 5.8119  7.5355  7.0064  7.488 5.821  6.7481
+## [11,] 1.1029 2.2342 1.6922 5.6711  7.7582  5.6391  8.013 5.339  8.2468
+##         [,10]  [,11]
+##  [1,]  0.9368  1.103
+##  [2,]  1.9956  2.234
+##  [3,]  1.6260  1.692
+##  [4,]  5.8119  5.671
+##  [5,]  7.5355  7.758
+##  [6,]  7.0064  5.639
+##  [7,]  7.4880  8.013
+##  [8,]  5.8214  5.339
+##  [9,]  6.7481  8.247
+## [10,] 10.7994  7.592
+## [11,]  7.5924 10.534
+</code></pre>
+
+<pre><code class="r">parameterEstimates(fit1, standardized = TRUE)
+</code></pre>
+
+<pre><code>##      lhs op   rhs   est    se      z pvalue ci.lower ci.upper std.lv
+## 1  ind60 =~    x1 1.000 0.000     NA     NA    1.000    1.000  0.674
+## 2  ind60 =~    x2 2.180 0.139 15.636  0.000    1.907    2.454  1.470
+## 3  ind60 =~    x3 1.819 0.153 11.887  0.000    1.519    2.118  1.226
+## 4  dem60 =~    y1 1.000 0.000     NA     NA    1.000    1.000  2.238
+## 5  dem60 =~    y2 1.257 0.184  6.842  0.000    0.897    1.617  2.813
+## 6  dem60 =~    y3 1.058 0.152  6.940  0.000    0.759    1.356  2.367
+## 7  dem60 =~    y4 1.265 0.146  8.664  0.000    0.979    1.551  2.831
+## 8  dem65 =~    y5 1.000 0.000     NA     NA    1.000    1.000  2.117
+## 9  dem65 =~    y6 1.186 0.170  6.977  0.000    0.853    1.519  2.510
+## 10 dem65 =~    y7 1.280 0.161  7.948  0.000    0.964    1.595  2.709
+## 11 dem65 =~    y8 1.266 0.159  7.953  0.000    0.954    1.578  2.680
+## 12 dem60  ~ ind60 1.483 0.402  3.691  0.000    0.695    2.271  0.447
+## 13 dem65  ~ ind60 0.572 0.223  2.569  0.010    0.136    1.009  0.182
+## 14 dem65  ~ dem60 0.837 0.099  8.457  0.000    0.643    1.031  0.885
+## 15    y1 ~~    y5 0.632 0.366  1.729  0.084   -0.084    1.349  0.632
+## 16    y2 ~~    y4 1.331 0.716  1.858  0.063   -0.073    2.735  1.331
+## 17    y2 ~~    y6 2.182 0.749  2.914  0.004    0.715    3.649  2.182
+## 18    y3 ~~    y7 0.806 0.620  1.299  0.194   -0.410    2.021  0.806
+## 19    y4 ~~    y8 0.353 0.451  0.782  0.434   -0.531    1.237  0.353
+## 20    y6 ~~    y8 1.374 0.580  2.370  0.018    0.238    2.511  1.374
+## 21    x1 ~~    x1 0.083 0.020  4.156  0.000    0.044    0.122  0.083
+## 22    x2 ~~    x2 0.121 0.071  1.707  0.088   -0.018    0.261  0.121
+## 23    x3 ~~    x3 0.473 0.092  5.142  0.000    0.293    0.653  0.473
+## 24    y1 ~~    y1 1.917 0.453  4.227  0.000    1.028    2.806  1.917
+## 25    y2 ~~    y2 7.473 1.402  5.331  0.000    4.725   10.220  7.473
+## 26    y3 ~~    y3 5.136 0.971  5.289  0.000    3.233    7.039  5.136
+## 27    y4 ~~    y4 3.190 0.754  4.232  0.000    1.713    4.668  3.190
+## 28    y5 ~~    y5 2.383 0.490  4.863  0.000    1.422    3.343  2.383
+## 29    y6 ~~    y6 5.021 0.933  5.382  0.000    3.193    6.849  5.021
+## 30    y7 ~~    y7 3.478 0.727  4.781  0.000    2.052    4.903  3.478
+## 31    y8 ~~    y8 3.298 0.709  4.653  0.000    1.909    4.687  3.298
+## 32 ind60 ~~ ind60 0.454 0.088  5.138  0.000    0.281    0.628  1.000
+## 33 dem60 ~~ dem60 4.009 0.940  4.266  0.000    2.167    5.852  0.800
+## 34 dem65 ~~ dem65 0.175 0.219  0.798  0.425   -0.255    0.604  0.039
+##    std.all std.nox
+## 1    0.920   0.920
+## 2    0.973   0.973
+## 3    0.872   0.872
+## 4    0.850   0.850
+## 5    0.717   0.717
+## 6    0.722   0.722
+## 7    0.846   0.846
+## 8    0.808   0.808
+## 9    0.746   0.746
+## 10   0.824   0.824
+## 11   0.828   0.828
+## 12   0.447   0.447
+## 13   0.182   0.182
+## 14   0.885   0.885
+## 15   0.296   0.296
+## 16   0.273   0.273
+## 17   0.356   0.356
+## 18   0.191   0.191
+## 19   0.109   0.109
+## 20   0.338   0.338
+## 21   0.154   0.154
+## 22   0.053   0.053
+## 23   0.239   0.239
+## 24   0.277   0.277
+## 25   0.486   0.486
+## 26   0.478   0.478
+## 27   0.285   0.285
+## 28   0.347   0.347
+## 29   0.443   0.443
+## 30   0.322   0.322
+## 31   0.315   0.315
+## 32   1.000   1.000
+## 33   0.800   0.800
+## 34   0.039   0.039
+</code></pre>
+
+<pre><code class="r">fitMeasures(fit1)
+</code></pre>
+
+<pre><code>##              fmin             chisq                df            pvalue 
+##             0.254            37.617            35.000             0.350 
+##    baseline.chisq       baseline.df   baseline.pvalue               cfi 
+##           720.912            55.000             0.000             0.996 
+##               tli              nnfi               rfi               nfi 
+##             0.994             0.994             0.918             0.948 
+##              pnfi               ifi               rni              logl 
+##             0.603             0.996             0.996         -1553.328 
+## unrestricted.logl              npar               aic               bic 
+##         -1534.265            31.000          3168.656          3240.498 
+##            ntotal              bic2             rmsea    rmsea.ci.lower 
+##            75.000          3142.794             0.032             0.000 
+##    rmsea.ci.upper      rmsea.pvalue               rmr        rmr_nomean 
+##             0.091             0.632             0.280             0.280 
+##              srmr       srmr_nomean             cn_05             cn_01 
+##             0.044             0.044           100.294           115.328 
+##               gfi              agfi              pgfi               mfi 
+##             0.923             0.854             0.489             0.983 
+##              ecvi 
+##             1.328
+</code></pre>
+
+<pre><code class="r">resid(fit1, type = &quot;normalized&quot;)
+</code></pre>
+
+<pre><code>## $cov
+##    x1     x2     x3     y1     y2     y3     y4     y5     y6     y7    
+## x1  0.000                                                               
+## x2 -0.003  0.000                                                        
+## x3 -0.020  0.012  0.000                                                 
+## y1  0.254 -0.408 -0.717 -0.042                                          
+## y2 -0.666 -0.501 -0.566 -0.031  0.077                                   
+## y3  0.253 -0.004 -0.471  0.450 -0.500  0.014                            
+## y4  0.952  0.598  0.493 -0.200  0.115 -0.009  0.008                     
+## y5  1.013  0.517  0.182 -0.151 -0.113  0.083 -0.075 -0.035              
+## y6 -0.413 -0.522 -0.357  0.259  0.202 -0.732  0.367 -0.289  0.029       
+## y7 -0.396 -0.493 -0.517 -0.040  0.098  0.001  0.049  0.073 -0.034 -0.009
+## y8  0.195 -0.067 -0.367 -0.108  0.273 -0.355  0.209 -0.289  0.092  0.220
+##    y8    
+## x1       
+## x2       
+## x3       
+## y1       
+## y2       
+## y3       
+## y4       
+## y5       
+## y6       
+## y7       
+## y8  0.031
+## 
+## $mean
+## x1 x2 x3 y1 y2 y3 y4 y5 y6 y7 y8 
+##  0  0  0  0  0  0  0  0  0  0  0
+</code></pre>
+
+<pre><code class="r">inspect(fit1, &quot;rsquare&quot;)
+</code></pre>
+
+<pre><code>##     x1     x2     x3     y1     y2     y3     y4     y5     y6     y7 
+## 0.8461 0.9468 0.7606 0.7232 0.5143 0.5218 0.7152 0.6529 0.5565 0.6784 
+##     y8  dem60  dem65 
+## 0.6853 0.1996 0.9610
+</code></pre>
+
+<h1>February 19th, 2013</h1>
+
+<h3>Identification Conditions for Path Models</h3>
+
+<h3>sem8.pdf</h3>
+
+<p>We can divide rules about identification conditions into necessary conditions, and sufficient conditions:</p>
+
+<ol>
+<li><strong>Recursive rule</strong> - when we have errors that are uncorrelated with each other, and no feedback loops / reciprocal paths; models that are recursive are <em>statistically identified</em></li>
+<li><strong>The algebraic method</strong> - specify the model and look at the relationship between parameters and covariance elements and make sure that for each parameter it is defined only by elements within the covariance matrix. </li>
+</ol>
+
+<p>For a three variable mediation model [x1 -&gt; y1 -&gt; y2] :</p>
+
+<p>\[ \phi_{11} = \sigma_{11} \]
+\[ \gamma_{11} = \frac{\sigma_{21}}{\sigma_{21}} \]
+\[ \psi_{11} = \sigma_{22} - \frac{\sigma_{21}}{\sigma_{21}} - \sigma_{11} \]
+\[ \beta_{21} = ?? \]
+\[ \psi_{22} = ?? \]</p>
+
+<ol>
+<li><strong>The t-rule</strong> - if you have more parameters than you have elements in your variance-covariance matrix, then the model is not identified. Cannot be used of evidence that a model is identified, only that it is not identified.</li>
+<li><strong>The null \( \beta \) rule</strong> -  if the \( \beta \) matrix contains all 0s, then the model is is identified. This is a sufficient condition, but not a necessary one. As long as I don&#39;t have ys predicting other ys, then the model is statistically identified. </li>
+</ol>
+
+<h4>The next two rules only apply when all elements of the \( \psi \) matrix are unrestricted</h4>
+
+<ol>
+<li><strong>The order rule</strong> - (necessary, but not sufficient for identification) construct a matrix with as many rows as y variables, and then include the identity matrix minus \( \beta \) and the negation of the \( \Gamma \) matrix. Columns will correspond to the four variables. </li>
+</ol>
+
+<p>\[  \begin{matrix} var & y1 & y2 & x1 & x2 \\ y1 & I - \beta & & - & \Gamma \\
+   y2 &  &  & & & \end{matrix} \]</p>
+
+<p>Which in practice looks like: </p>
+
+<p>\[ \begin{matrix} var & y1 & y2 & x1 & x2 \\ y1 & 1 & 0 & -\gamma_{11} & -\gamma_{12} \\ y2 & -\beta_{21}  & 1  & -\gamma_{21} & -\gamma_{22} \end{matrix} \]</p>
+
+<p>The number of 0s in each row must be greater than <em>p-1</em>. Constraining paths will allow the above model to be identified potentially. Changing \( \beta{_21} \) to 0 would do this. 
+6. <strong>The rank rule</strong> - Delete all columns in the above matrix where there is a 0. If the rank of the resulting matrix is equal to <em>p-1</em> then the equation is identified, and if all equations are identified, then the model is identified. </p>
+
+<p>For all of these, empiricial underidentification can occur if the data turns out to violate some of the assumptions that the identification rules may assume. </p>
+
+<h4>Practically speaking, we can use methods in statistical software to help us with this.</h4>
+
+<ul>
+<li>Software model checks</li>
+<li>Rerun the analysis using different starting values and test for changes in parameter estimates, if parameter estimates change, then there is a problem likely</li>
+<li>Fit the model to the observed covariance matrix, then fit another model using the fitted covariance matrix from that model, and fit the same model again, parameter estimates should remain constant</li>
+</ul>
+
+<pre><code class="r">fit1 &lt;- sem(model, data = PoliticalDemocracy, representation = &quot;LISREL&quot;, mimic = &quot;EQS&quot;)
+newdata &lt;- fitted.values(fit1)$cov
+
+fit2 &lt;- sem(model, sample.cov = newdata, sample.nobs = nrow(PoliticalDemocracy), 
+    representation = &quot;LISREL&quot;, mimic = &quot;EQS&quot;)
+
+coef(fit1) - coef(fit2)
+</code></pre>
+
+<pre><code>##    ind60=~x2    ind60=~x3    dem60=~y2    dem60=~y3    dem60=~y4 
+##            0            0            0            0            0 
+##    dem65=~y6    dem65=~y7    dem65=~y8  dem60~ind60  dem65~ind60 
+##            0            0            0            0            0 
+##  dem65~dem60       y1~~y5       y2~~y4       y2~~y6       y3~~y7 
+##            0            0            0            0            0 
+##       y4~~y8       y6~~y8       x1~~x1       x2~~x2       x3~~x3 
+##            0            0            0            0            0 
+##       y1~~y1       y2~~y2       y3~~y3       y4~~y4       y5~~y5 
+##            0            0            0            0            0 
+##       y6~~y6       y7~~y7       y8~~y8 ind60~~ind60 dem60~~dem60 
+##            0            0            0            0            0 
+## dem65~~dem65 
+##            0
+</code></pre>
+
+<p>In this example, because the difference between the coefficients is 0 across the board, this indicates the model did converge well. </p>
+
+<ul>
+<li>Another option is to look at standard errors in the solution. Extremely large standard errors are  a problem. </li>
+</ul>
+
+<pre><code class="r">inspect(fit1, &quot;se&quot;)
+</code></pre>
+
+<pre><code>## $lambda
+##    ind60 dem60 dem65
+## x1 0.000 0.000 0.000
+## x2 0.139 0.000 0.000
+## x3 0.153 0.000 0.000
+## y1 0.000 0.000 0.000
+## y2 0.000 0.184 0.000
+## y3 0.000 0.152 0.000
+## y4 0.000 0.146 0.000
+## y5 0.000 0.000 0.000
+## y6 0.000 0.000 0.170
+## y7 0.000 0.000 0.161
+## y8 0.000 0.000 0.159
+## 
+## $theta
+##    x1    x2    x3    y1    y2    y3    y4    y5    y6    y7    y8   
+## x1 0.020                                                            
+## x2 0.000 0.071                                                      
+## x3 0.000 0.000 0.092                                                
+## y1 0.000 0.000 0.000 0.453                                          
+## y2 0.000 0.000 0.000 0.000 1.402                                    
+## y3 0.000 0.000 0.000 0.000 0.000 0.971                              
+## y4 0.000 0.000 0.000 0.000 0.716 0.000 0.754                        
+## y5 0.000 0.000 0.000 0.366 0.000 0.000 0.000 0.490                  
+## y6 0.000 0.000 0.000 0.000 0.749 0.000 0.000 0.000 0.933            
+## y7 0.000 0.000 0.000 0.000 0.000 0.620 0.000 0.000 0.000 0.727      
+## y8 0.000 0.000 0.000 0.000 0.000 0.000 0.451 0.000 0.580 0.000 0.709
+## 
+## $psi
+##       ind60 dem60 dem65
+## ind60 0.088            
+## dem60 0.000 0.940      
+## dem65 0.000 0.000 0.219
+## 
+## $beta
+##       ind60 dem60 dem65
+## ind60 0.000 0.000     0
+## dem60 0.402 0.000     0
+## dem65 0.223 0.099     0
+</code></pre>
+
+<ul>
+<li>Improper solutions, where variances are negative, which is not possible.</li>
+</ul>
+
+<h4>Block Recursive Models</h4>
+
+<p>A special class of models that rules have special identification rules applied to them. Block recursive models are:</p>
+
+<ul>
+<li>Models where y variables can be grouped into blocks where the \( \zeta \) have errors correlated, and </li>
+<li>unidirectional effects between the blocks</li>
+</ul>
+
+<h4>How to handle identification problems</h4>
+
+<ul>
+<li>Add x variables</li>
+<li>Constrain correlations between \( \psi \) s that are involved in feedback loops to 0</li>
+<li>Constrain parameters as being equal, being 0, or proportional</li>
+<li>Delete paths from the model</li>
+</ul>
+
+<h1>February 21rd, 2013</h1>
+
+<h3>Estimation Methods</h3>
+
+<h4>sem9.pdf</h4>
+
+<p>The whole purpose in estimating a model is to find values of parameters that leads to a fitted covariance matrix that is as close as possible to the data (covariance matrix) </p>
+
+<p>The sampel covariance matrix is referred to as \( S \) and the fitted covariance matrix is \( \hat\Sigma \). Our goal is to minimize the distance between \( S \) and \( \hat\Sigma \). </p>
+
+<p>In <code>lavaan</code> we have a number of arguments we can pass to the <code>estimator</code> option in the fitting function for these: &ldquo;ML&rdquo;, &ldquo;GLS&rdquo;, &ldquo;WLS&rdquo;, &ldquo;ULS&rdquo;, and &ldquo;DWLS&rdquo; are the main. </p>
+
+<h4>Maximum Likelihood</h4>
+
+<p>Often the preferred estimator. Robust to non-normality in terms of estimates, but not statistical tests (need robustness for this). </p>
+
+<p>Parameter estimates have some nice properties: </p>
+
+<ul>
+<li>consistent</li>
+<li>asymptotically unbiased</li>
+<li>efficient</li>
+<li>normally distributed</li>
+<li>scale free</li>
+<li>scale invariant</li>
+<li>a \( \Chi^{2} \) test is possible to evaluate model fit</li>
+</ul>
+
+<p>ML output is more susceptible to improper solutions than other methods.</p>
+
+<h4>Unweighted Least Squares (ULS or LS)</h4>
+
+<p>Minimize the sum of squares in the residual matrix. Viewed as less attractive sometimes. </p>
+
+<p>Advantages:</p>
+
+<ul>
+<li>statistically consistent parameter estimates</li>
+<li>no distributional assumptions of variables</li>
+<li>simplicity</li>
+<li>can compute tests for statistical significance of model parameters</li>
+</ul>
+
+<p>Disadvantages:</p>
+
+<ul>
+<li>parameter estimates and fit index are scale dependent</li>
+<li>parameter estimates are not asymptoticaly efficient</li>
+<li>no overall test of fit</li>
+</ul>
+
+<h4>Generalized Least Squares (GLS)</h4>
+
+<p>A weight matrix \( W \) is used to modify the LS estimator to control for unequal variances or nonzero correlations among equation errors</p>
+
+<p>Very similar to maximum likelihood.</p>
+
+<p>Advantages:</p>
+
+<ul>
+<li>Parameter estimates are consistent, efficient, and unbiased</li>
+<li>asymptotically normally distributed</li>
+<li>Scale invariant and scale free (weight matrix compensates for weights to variables)</li>
+<li>\( \chi^{2} \) test is available for model fit</li>
+</ul>
+
+<p>Disadvantages:</p>
+
+<ul>
+<li>Not that different from ML</li>
+</ul>
+
+<h1>February 25th, 2013</h1>
+
+<h3>Model Fit Statistics</h3>
+
+<h4>sem10.pdf</h4>
+
+<h4>\( \chi^{2} \) Test</h4>
+
+<p>Essentially a yes or no test of whether the model fits or not. Which can be a very conservative way to evaluate model fit. The smaller the number, the better the model fit.</p>
+
+<ul>
+<li>\( \chi^{2} \) test has no upper bound</li>
+<li>\( \chi^{2} \) is very influenced by sample size, as the sample gets larger, the same amount of model fit implies a larger amount of misfit; large samples with small differences can claim misfit</li>
+<li>Heavily influenced by the number of parameters in the model, as the number of parameters increases, the \( \chi^{2} \) value decreases. This will make us tend always toward a more complex model. </li>
+</ul>
+
+<h4>Other of goodness of fit indices</h4>
+
+<ul>
+<li>Are often normalized</li>
+<li>Often include penalties for model complexity to capture the belief we prefer simpler models over more complex models</li>
+</ul>
+
+<p>These indices can be classified and grouped:</p>
+
+<p><em>Incremental Fit Indices</em></p>
+
+<ul>
+<li>Make comparisons to null model, which in this case is defined as the model where the correlations between all the variables in the model is 0</li>
+<li>Now we compare how much the proposed model improves the fit on the model with no paths at all</li>
+<li>Thus we get a \( \chi^{2}_{M} \) for the model we propose and a \( \chi^{2}_{N} \) for the null model; and we also have a \( df_{M} \) and \( df_{N} \)</li>
+<li>The null model will always be simpler and have fewer degrees of freedom</li>
+<li>Examples: NFI (Bentler-Bonnett Normed Fit Index) scaling the reduction in model \( \chi^{2} \) compared to the null model \( \frac{\chi^{2}_{N} - \chi^{2}_{M}}{\chi^{2}_{N}} \)</li>
+<li>0 is a poor fit, 1 is a good fit 0.95 is ideal</li>
+<li>NNFI (Tucker-Lewis Index TLI)  \( \frac{\frac{\chi^{2}_{N}}{df_{N}} - \frac{\chi^{2}_{M}}{df_{M}}}{\frac{\chi^{2}_{N}}{df_{N}}-1} \)</li>
+<li>This index can climb above 1</li>
+<li>Parsimony normed fit index (PNFI) \( \frac{df_{M}}{df_{N}}NFI \)</li>
+<li>CFI (Comparative Fit Index) \[ 1-\frac{Max(\chi^{2}_{M}-df_{M}, 0)}{Max(\chi^{2}_{M}-df_{M},\chi^{2}_{N}-df_{N}, 0)} \]</li>
+<li>Incremental Fit Index</li>
+<li>Relative Fit Index</li>
+<li>CFI and NNFI are most popular to report</li>
+</ul>
+
+<p><em>Indices based on population error of approximation</em></p>
+
+<p>Based on a recognition that we do not have a population. Adjust the minimum fit function to account for the errors in the approximation of the population. </p>
+
+<ul>
+<li>PDF</li>
+<li>RMSEA </li>
+</ul>
+
+<p>\[ \sqrt{\frac{\frac{\chi^{2}_{M}}{n}}{df_{M}}-\frac{1}{n}} \]</p>
+
+<ul>
+<li>Low values imply a well fitting model </li>
+</ul>
+
+<p><em>Indices based on model parsimony</em></p>
+
+<p>Used to compare models of different model fits.</p>
+
+<ul>
+<li>Akaike Information Criterion (AIC) \( \chi^{2}_{M} - 2df_{M} \)</li>
+<li>Consistent AIC (CAIC) \( \chi^{2}_{M} - log_{c}(n+1)df_{M} \)</li>
+<li>When reported it shows the AIC of the independence and the saturated model to show the bounds around the AIC for the current model</li>
+<li>The smaller the value the better here, and the more simple models have a better chance due to the penalty for having additional model parameters</li>
+<li>BIC and others fall within this category</li>
+</ul>
+
+<p><em>Residual-based Indices</em></p>
+
+<ul>
+<li>Root mean square residual (RMR): average size of the residual on the estimated covariance matrix (scale dependent, smaller is better)</li>
+<li>Standardized RMR (SRMR) is the average size of the residual on the estimated correlation matrix (between 0 and 1); ideally .05 or lower</li>
+<li>Goodness of Fit Index (GFI) proportion of variability in the covariance elements explained by the model fitted covariance \( S \) basedo on the data and the \( \hat\Sigma \) matrix estimated by the model</li>
+<li>GFI takes comparison between \( S \) and \( \hat\Sigma \) elements, looking at their correlation, square it, and get the GFI: regressing the \( S \) values onto the \( \hat\Sigma \) values (0.95 or higher are good values)</li>
+<li>Adjusted GFI (AGFI) corrected for shrinkage</li>
+</ul>
+
+<h4>Remember</h4>
+
+<ul>
+<li>Model fit indices refer to the fit of the whole model. Pieces of the model may fit quite well. A single path that does not fit well can dramatically reduce model fit indices. </li>
+<li>Fit indices may be good, but parameter estimates may be inconsistent with theoretical expectations. Always need to inspect path estimates.</li>
+<li>Indices can indicate good fit, but predictive power can be low still. This occurs especially when you have a large sample, but the relationships among your variables is not that large. This improves over the independence model, but does not explain much real variation in your outcome.</li>
+</ul>
+
+<h4>Model Fit Recommendation</h4>
+
+<p>Hu and Bentler (1999)</p>
+
+<ul>
+<li>Two index approach </li>
+<li>SRMR of .08 or lower indicates fit</li>
+<li>Report another index (one of TLI, CFI, RMSEA)</li>
+<li>Suggested cutoffs TLI(NNI) .95 / CFI .9 / RMSEA .06</li>
+</ul>
+
+<h4>Hierarchical Relations Among models</h4>
+
+<p>Two models are considered hierarchically related if you can go from one to the other only by adding or only by deleting paths (you can&#39;t add <em>and</em> remove paths)</p>
+
+<p>One model can be viewed as a special case of another model where one or more paths are fixed to 0 </p>
+
+<p>From initial model, define one that is a special case of the initial model and one that is a non-hierarchically related model (remove and add a path to initial model).</p>
+
+<h1>February 28th, 2013</h1>
+
+<h3>Model Fit Statistics</h3>
+
+<h4>sem10.pdf</h4>
+
+<p>We often want to inspect the residuals to see which paths are causing problems in model fit. Large positive residuals indicate the path is underestimating the relationship between two variables. Restricting paths could be good to fix this. Large negative residuals indicate the path is overestimating the relationship between two variables, and adding a path between these variables may help. </p>
+
+<p>To compare two models we can do a statistical test with hierarchically related models. A \( \chi^{2} \) fit test says that we are evaluating a null hypothesis where there is no difference in the fit between the two models. The difference between the two \( \chi^{2} \) is distributed \( \chi^{2} \), we can conduct a test of significance using this difference, and the difference in the degrees of freedom in the two models as the \( df \) for the \( \chi^{2} \) test. </p>
+
+<h4>Modification Fit Indices</h4>
+
+<p>Based on looking at how model fit will change in response to constraining paths. This is estimated using a LaGrange Multiplier. For a modification index about <strong>3.84</strong> would suggest that if that path is added, the \( \chi^{2} \) should drop enough to make a statistically significant difference. </p>
+
+<h4>Equivalent Models</h4>
+
+<p>However, a better way to do this is to use modification indices. </p>
+
+<h1>March 7th, 2013</h1>
+
+<h3>Measurement Models</h3>
+
+<h3>sem12.pdf</h3>
+
+<p>Why should we be concerned about measurement error?</p>
+
+<p>The relationship between \( \gamma_{1}^{*} \) and \( \gamma_{1} \) is affected by other factors, and not just the reliability or measurement error of \( x_{1} \) and \( y \). </p>
+
+<pre><code class="r">measmatrix &lt;- matrix(c(1, 0.6, 0.33, 0.4, 0.6, 1, 0.63, 0.21, 0.33, 0.63, 1, 
+    0.11, 0.4, 0.21, 0.11, 1), 4, 4, byrow = TRUE)
+
+colnames(measmatrix) &lt;- rownames(measmatrix) &lt;- c(&quot;x1&quot;, &quot;x2&quot;, &quot;x3&quot;, &quot;y1&quot;)
+
+myN &lt;- 500
+
+
+measmod &lt;- &quot;y1 ~ factor\neta =~ x1 + x2 + x3&quot;
+
+measmodfit &lt;- sem(measmod, sample.cov = measmatrix, sample.nobs = myN)
+</code></pre>
+
+<pre><code>## found:  x1 x2 x3 y1 
+## expected:  x1 x2 x3 y1 factor
+</code></pre>
+
+<pre><code>## Error: lavaan ERROR: rownames of covariance matrix do not match the model!
+## found: x1 x2 x3 y1 expected: x1 x2 x3 y1 factor
+</code></pre>
+
+<pre><code class="r">
+summary(measmodfit)
+</code></pre>
+
+<pre><code>## Error: error in evaluating the argument &#39;object&#39; in selecting a method for
+## function &#39;summary&#39;: Error: object &#39;measmodfit&#39; not found
+</code></pre>
+
+<p>Let&#39;s look at the plot of this:</p>
+
+<pre><code class="r">dev_mode()
+</code></pre>
+
+<pre><code>## Dev mode: ON
+</code></pre>
+
+<pre><code class="r">library(semPlot)
+semPaths(measmodfit, whatLabels = &quot;est&quot;, style = &quot;lisrel&quot;)
+</code></pre>
+
+<pre><code>## Error: object &#39;measmodfit&#39; not found
+</code></pre>
+
+<pre><code class="r">dev_mode()
+</code></pre>
+
+<pre><code>## Dev mode: OFF
+</code></pre>
+
+<p>Now consider the example in the notes:</p>
+
+<pre><code class="r">jobsatis &lt;- matrix(c(1, 0.2, 0.2, 1), 2, 2, byrow = TRUE)
+
+colnames(jobsatis) &lt;- rownames(jobsatis) &lt;- c(&quot;JSO&quot;, &quot;ACHO&quot;)
+
+myN &lt;- 200
+
+jobmod &lt;- &quot; JSL ~ ACHL\nJSL =~ JSO\nACHL =~ ACHO&quot;
+
+jobmodfit &lt;- cfa(jobmod, sample.cov = jobsatis, sample.nobs = myN)
+
+summary(jobmodfit)
+</code></pre>
+
+<pre><code>## lavaan (0.5-11) converged normally after  34 iterations
+## 
+##   Number of observations                           200
+## 
+##   Estimator                                         ML
+##   Minimum Function Test Statistic                0.000
+##   Degrees of freedom                                 0
+##   P-value (Chi-square)                           0.000
+## 
+## Parameter estimates:
+## 
+##   Information                                 Expected
+##   Standard Errors                             Standard
+## 
+##                    Estimate  Std.err  Z-value  P(&gt;|z|)
+## Latent variables:
+##   JSL =~
+##     JSO               1.000
+##   ACHL =~
+##     ACHO              1.000
+## 
+## Regressions:
+##   JSL ~
+##     ACHL              0.200    0.069    2.887    0.004
+## 
+## Variances:
+##     JSO               0.000
+##     ACHO              0.000
+##     JSL               0.955    0.096
+##     ACHL              0.995    0.099
+</code></pre>
+
+<p>And another model with mediation:</p>
+
+<pre><code class="r">mediationmod &lt;- matrix(c(1, 0.07, 0.07, 0.07, 1, 0.2, 0.07, 0.2, 1), 3, 3, byrow = TRUE)
+
+colnames(mediationmod) &lt;- rownames(mediationmod) &lt;- c(&quot;EXPO&quot;, &quot;JSO&quot;, &quot;ACHO&quot;)
+
+myN &lt;- 200
+
+medmod &lt;- &quot; JSL ~ EXPL\nEXPL ~ ACHL\nEXPL =~ EXPO\nJSL =~ JSO\nACHL =~ ACHO&quot;
+
+medmodfit &lt;- cfa(medmod, sample.cov = mediationmod, sample.nobs = myN)
+
+summary(medmodfit)
+</code></pre>
+
+<pre><code>## lavaan (0.5-11) converged normally after  31 iterations
+## 
+##   Number of observations                           200
+## 
+##   Estimator                                         ML
+##   Minimum Function Test Statistic                7.840
+##   Degrees of freedom                                 1
+##   P-value (Chi-square)                           0.005
+## 
+## Parameter estimates:
+## 
+##   Information                                 Expected
+##   Standard Errors                             Standard
+## 
+##                    Estimate  Std.err  Z-value  P(&gt;|z|)
+## Latent variables:
+##   EXPL =~
+##     EXPO              1.000
+##   JSL =~
+##     JSO               1.000
+##   ACHL =~
+##     ACHO              1.000
+## 
+## Regressions:
+##   JSL ~
+##     EXPL              0.070    0.071    0.992    0.321
+##   EXPL ~
+##     ACHL              0.070    0.071    0.992    0.321
+## 
+## Variances:
+##     EXPO              0.000
+##     JSO               0.000
+##     ACHO              0.000
+##     EXPL              0.990    0.099
+##     JSL               0.990    0.099
+##     ACHL              0.995    0.099
+</code></pre>
+
+<p>Remember that LISREL will set the error variances of the latent variables to being free. </p>
+
+<h4>Pure Measurement Models</h4>
+
+<p>Everything to estimate a pure measurment model can be estimated with three matrices: \( \lambda_{x} \), \( \phi \) and the \( \theta_{\delta} \). </p>
+
+<p>In a measurement model there is a distinction between reflective indicators of latent variables and formative indicators of latent variables. The paths go from the latent variable out to the measures of the effect, because the latent variable is leading to the higher observed values of the measures. The latent variable is fixed and observed variables are <strong>reflections</strong> of it. </p>
+
+<p>\( \xi \) is a reflection of the \( x \)&#39;s. </p>
+
+<p>There are lots of settings where a group of variables are considered as part of a collection, and people want to think about them giving a latent variable a definition, and these are known as <strong>formative</strong> indicators of the latent variable. </p>
+
+<p>In the <strong>formative</strong> setting there is no expectation about the correlation structure among the \( x \)&#39;s. In a <strong>reflective</strong> setting, \( \xi \) is defined by the correlation among the \( x \)&#39;s and will wind up having no variance itself if the \( x \)&#39;s do not have much correlation. </p>
+
+<p>To check for this: 
+1. Check the fit of the measurement model. 
+2. There will be large heterogeneity among the loadings and won&#39;t line up with descriptive statistics. 
+3. There will be a very low variance for the \( \xi \). 
+4. You can&#39;t figure out how to interpret what the variable means. </p>
+
+<p>If you have a <strong>formative</strong> setting, then you can create a composite of these variables and use that composite as an observed variable in your model as an observed and not a latent variable. </p>
+
+<p>\[ x_{1} = \lambda_{11}\xi_{1} + \delta_{1} \]
+\[ x_{2} = \lambda_{21}\xi_{1} + \delta_{2} \]</p>
+
+<p>Now we need to understand that we can reduce down the covariance among the \( x \)&#39;s using the variables we already have:</p>
+
+<p>\[ Cov(x_{1}, x_{2}) = Cov(\lambda_{11}\xi_{1} + \delta_{1}, \lambda_{21}\xi_{1} + \delta_{2}) \]</p>
+
+<p>Which reduced to: </p>
+
+<p>\[ \lambda{11}\lambda{21}\phi_{11} \]</p>
+
+<p>This is the product of the two factor loadings of the \( x \)&#39;s on the \( \xi \) and the \( Var(\xi) \). In some cases, we set \( Var(\xi) = 1 \) in which case this covariance is actually equal entirely to \( \lambda_{11}\lambda_{21} \). </p>
+
+<h1>March 12th, 2013</h1>
+
+<h3>Confirmatory Factor Analysis</h3>
+
+<h3>sem13.pdf</h3>
+
+<pre><code class="r">cfamatrix1 &lt;- matrix(c(1, 0.39, 0.35, 0.21, 0.32, 0.4, 0.39, 0.39, 0.39, 1, 
+    0.67, 0.11, 0.27, 0.29, 0.32, 0.29, 0.35, 0.67, 1, 0.16, 0.29, 0.28, 0.3, 
+    0.37, 0.21, 0.11, 0.16, 1, 0.38, 0.3, 0.31, 0.42, 0.32, 0.27, 0.29, 0.38, 
+    1, 0.47, 0.42, 0.48, 0.4, 0.29, 0.28, 0.3, 0.47, 1, 0.41, 0.51, 0.39, 0.32, 
+    0.3, 0.31, 0.42, 0.41, 1, 0.42, 0.39, 0.29, 0.37, 0.42, 0.48, 0.51, 0.42, 
+    1), 8, 8, byrow = TRUE)
+
+colnames(cfamatrix1) &lt;- rownames(cfamatrix1) &lt;- c(&quot;handmov&quot;, &quot;numbrec&quot;, &quot;wordord&quot;, 
+    &quot;gesclos&quot;, &quot;triangle&quot;, &quot;spatmem&quot;, &quot;matanalg&quot;, &quot;photser&quot;)
+
+myN &lt;- 200
+
+cfamod1 &lt;- &quot; Sequent =~ handmov + numbrec + wordord\nSimult =~ gesclos + triangle+ spatmem + matanalg+ photser\n&quot;
+cfamodfit &lt;- cfa(cfamod1, sample.cov = cfamatrix1, sample.nobs = myN, mimic = &quot;EQS&quot;, 
+    sample.cov.rescale = FALSE)
+
+summary(cfamodfit, standardized = TRUE)
+</code></pre>
+
+<pre><code>## lavaan (0.5-11) converged normally after  31 iterations
+## 
+##   Number of observations                           200
+## 
+##   Estimator                                         ML
+##   Minimum Function Test Statistic               38.644
+##   Degrees of freedom                                19
+##   P-value (Chi-square)                           0.005
+## 
+## Parameter estimates:
+## 
+##   Information                                 Expected
+##   Standard Errors                             Standard
+## 
+##                    Estimate  Std.err  Z-value  P(&gt;|z|)   Std.lv  Std.all
+## Latent variables:
+##   Sequent =~
+##     handmov           1.000                               0.500    0.500
+##     numbrec           1.615    0.254    6.369    0.000    0.807    0.807
+##     wordord           1.612    0.253    6.370    0.000    0.806    0.806
+##   Simult =~
+##     gesclos           1.000                               0.508    0.508
+##     triangle          1.336    0.219    6.102    0.000    0.678    0.678
+##     spatmem           1.333    0.219    6.095    0.000    0.677    0.677
+##     matanalg          1.200    0.208    5.778    0.000    0.609    0.609
+##     photser           1.453    0.230    6.321    0.000    0.738    0.738
+## 
+## Covariances:
+##   Sequent ~~
+##     Simult            0.146    0.037    3.950    0.000    0.574    0.574
+## 
+## Variances:
+##     handmov           0.750    0.082    9.200    0.000    0.750    0.750
+##     numbrec           0.348    0.072    4.847    0.000    0.348    0.348
+##     wordord           0.350    0.072    4.886    0.000    0.350    0.350
+##     gesclos           0.742    0.081    9.138    0.000    0.742    0.742
+##     triangle          0.540    0.068    7.885    0.000    0.540    0.540
+##     spatmem           0.542    0.069    7.903    0.000    0.542    0.542
+##     matanalg          0.629    0.074    8.539    0.000    0.629    0.629
+##     photser           0.456    0.065    7.041    0.000    0.456    0.456
+##     Sequent           0.250    0.073    3.405    0.001    1.000    1.000
+##     Simult            0.258    0.075    3.452    0.001    1.000    1.000
+</code></pre>
+
+<p>To extract the squared multiple correlations:</p>
+
+<pre><code class="r">library(psych)
+</code></pre>
+
+<pre><code>## Warning: package &#39;psych&#39; was built under R version 2.15.3
+</code></pre>
+
+<pre><code>## Attaching package: &#39;psych&#39;
+</code></pre>
+
+<pre><code>## The following object(s) are masked from &#39;package:boot&#39;:
+## 
+## logit
+</code></pre>
+
+<pre><code class="r">smc(cfamatrix1, covar = TRUE)
+</code></pre>
+
+<pre><code>##  handmov  numbrec  wordord  gesclos triangle  spatmem matanalg  photser 
+##   0.2960   0.4874   0.4856   0.2319   0.3591   0.3734   0.3152   0.4315
+</code></pre>
+
+<p>To look for misfit, let&#39;s examine the residuals:</p>
+
+<pre><code class="r">resid(cfamodfit, type = &quot;normalized&quot;)  # type can be switched between
+</code></pre>
+
+<pre><code>## $cov
+##          handmv numbrc wordrd gescls tringl spatmm matnlg photsr
+## handmov   0.000                                                 
+## numbrec  -0.181  0.000                                          
+## wordord  -0.707  0.225  0.000                                   
+## gesclos   0.891 -1.759 -1.043  0.000                            
+## triangle  1.690 -0.604 -0.321  0.471  0.000                     
+## spatmem   2.704 -0.319 -0.448 -0.590  0.140  0.000              
+## matanalg  2.836  0.508  0.247  0.009  0.087 -0.031  0.000       
+## photser   2.350 -0.703  0.383  0.592 -0.261  0.134 -0.386  0.000
+## 
+## $mean
+##  handmov  numbrec  wordord  gesclos triangle  spatmem matanalg  photser 
+##        0        0        0        0        0        0        0        0
+</code></pre>
+
+<pre><code class="r"># normalized, standardized, and raw
+
+mi &lt;- modindices(cfamodfit)
+# Phi
+mi[mi$op == &quot;=~&quot; &amp; mi$mi &gt; 0, ]
+</code></pre>
+
+<pre><code>##        lhs   op      rhs     mi    epc sepc.lv sepc.all sepc.nox
+## 1     &lt;NA&gt; &lt;NA&gt;     &lt;NA&gt;     NA     NA      NA       NA       NA
+## 2  Sequent   =~  gesclos  3.857 -0.379  -0.190   -0.190   -0.190
+## 3  Sequent   =~ triangle  0.199 -0.081  -0.041   -0.041   -0.041
+## 4  Sequent   =~  spatmem  0.002  0.008   0.004    0.004    0.004
+## 5  Sequent   =~ matanalg  2.119  0.271   0.135    0.135    0.135
+## 6  Sequent   =~  photser  0.217  0.084   0.042    0.042    0.042
+## 7   Simult   =~  handmov 21.722  0.893   0.453    0.453    0.453
+## 8   Simult   =~  numbrec  7.172 -0.601  -0.305   -0.305   -0.305
+## 9   Simult   =~  wordord  0.490 -0.157  -0.080   -0.080   -0.080
+## 10    &lt;NA&gt; &lt;NA&gt;     &lt;NA&gt;     NA     NA      NA       NA       NA
+</code></pre>
+
+<pre><code class="r"># Theta-Delta
+mi[mi$op == &quot;~~&quot; &amp; mi$mi &gt; 0, ]
+</code></pre>
+
+<pre><code>##         lhs op      rhs     mi    epc sepc.lv sepc.all sepc.nox
+## 1   handmov ~~  numbrec  0.490 -0.047  -0.047   -0.047   -0.047
+## 2   handmov ~~  wordord  7.172 -0.178  -0.178   -0.178   -0.178
+## 3   handmov ~~  gesclos  0.049  0.013   0.013    0.013    0.013
+## 4   handmov ~~ triangle  0.065  0.013   0.013    0.013    0.013
+## 5   handmov ~~  spatmem  4.407  0.107   0.107    0.107    0.107
+## 6   handmov ~~ matanalg  3.370  0.098   0.098    0.098    0.098
+## 7   handmov ~~  photser  1.302  0.056   0.056    0.056    0.056
+## 8   numbrec ~~  wordord 21.722  0.690   0.690    0.690    0.690
+## 9   numbrec ~~  gesclos  2.439 -0.073  -0.073   -0.073   -0.073
+## 10  numbrec ~~ triangle  0.069 -0.011  -0.011   -0.011   -0.011
+## 11  numbrec ~~  spatmem  0.021  0.006   0.006    0.006    0.006
+## 12  numbrec ~~ matanalg  0.862  0.041   0.041    0.041    0.041
+## 13  numbrec ~~  photser  2.615 -0.067  -0.067   -0.067   -0.067
+## 14  wordord ~~  gesclos  0.089 -0.014  -0.014   -0.014   -0.014
+## 15  wordord ~~ triangle  0.065 -0.011  -0.011   -0.011   -0.011
+## 16  wordord ~~  spatmem  1.429 -0.051  -0.051   -0.051   -0.051
+## 17  wordord ~~ matanalg  0.353 -0.026  -0.026   -0.026   -0.026
+## 18  wordord ~~  photser  2.005  0.058   0.058    0.058    0.058
+## 19  gesclos ~~ triangle  0.950  0.053   0.053    0.053    0.053
+## 20  gesclos ~~  spatmem  1.409 -0.065  -0.065   -0.065   -0.065
+## 21  gesclos ~~ matanalg  0.000  0.001   0.001    0.001    0.001
+## 22  gesclos ~~  photser  2.133  0.079   0.079    0.079    0.079
+## 23 triangle ~~  spatmem  0.167  0.022   0.022    0.022    0.022
+## 24 triangle ~~ matanalg  0.045  0.012   0.012    0.012    0.012
+## 25 triangle ~~  photser  0.884 -0.053  -0.053   -0.053   -0.053
+## 26  spatmem ~~ matanalg  0.006 -0.004  -0.004   -0.004   -0.004
+## 27  spatmem ~~  photser  0.237  0.027   0.027    0.027    0.027
+## 28 matanalg ~~  photser  1.281 -0.062  -0.062   -0.062   -0.062
+</code></pre>
+
+<p>Factor loading decisions can be somewhat arbitrary, but should be driven by theory. It becomes more complicated to interpret the factors the more associations you free up among them and the variables loading onto them, so being careful and thinking about interpretation is an important element to consider. The best fitting measurement model may not be the most useful for interpretation. </p>
+
+<h4>Misspecification Example of CFA</h4>
+
+<pre><code class="r">decmatrix &lt;- matrix(c(1, 0.59, 0.35, 0.34, 0.63, 0.4, 0.28, 0.2, 0.11, -0.07, 
+    0.59, 1, 0.42, 0.51, 0.49, 0.52, 0.31, 0.36, 0.21, 0.09, 0.35, 0.42, 1, 
+    0.38, 0.19, 0.36, 0.73, 0.24, 0.44, -0.08, 0.34, 0.51, 0.38, 1, 0.29, 0.46, 
+    0.27, 0.39, 0.17, 0.18, 0.63, 0.49, 0.19, 0.29, 1, 0.34, 0.17, 0.23, 0.13, 
+    0.39, 0.4, 0.52, 0.36, 0.46, 0.34, 1, 0.33, 0.32, 0.18, 0, 0.28, 0.31, 0.73, 
+    0.27, 0.17, 0.32, 1, 0.24, 0.34, -0.02, 0.2, 0.36, 0.24, 0.39, 0.23, 0.33, 
+    0.24, 1, 0.24, -0.02, 0.11, 0.21, 0.44, 0.17, 0.13, 0.18, 0.34, 0.24, 1, 
+    0.17, -0.07, 0.09, -0.08, 0.18, 0.39, 0, -0.02, -0.17, 0, 1), 10, 10, byrow = TRUE)
+
+colnames(decmatrix) &lt;- rownames(decmatrix) &lt;- c(&quot;hund&quot;, &quot;lj&quot;, &quot;sp&quot;, &quot;hj&quot;, &quot;fourh&quot;, 
+    &quot;h110&quot;, &quot;disc&quot;, &quot;pv&quot;, &quot;jav&quot;, &quot;r1500&quot;)
+
+myN &lt;- 230
+
+decmod1 &lt;- &quot; speed =~ hund + lj + fourh + h110 + r1500\nstrength =~ sp + disc + jav\njump =~ lj + hj + h110 +pv\n&quot;
+decmodfit &lt;- cfa(decmod1, sample.cov = decmatrix, sample.nobs = myN, mimic = &quot;EQS&quot;, 
+    sample.cov.rescale = FALSE, std.lv = FALSE)
+summary(decmodfit)
+</code></pre>
+
+<pre><code>## lavaan (0.5-11) converged normally after  46 iterations
+## 
+##   Number of observations                           230
+## 
+##   Estimator                                         ML
+##   Minimum Function Test Statistic              159.845
+##   Degrees of freedom                                30
+##   P-value (Chi-square)                           0.000
+## 
+## Parameter estimates:
+## 
+##   Information                                 Expected
+##   Standard Errors                             Standard
+## 
+##                    Estimate  Std.err  Z-value  P(&gt;|z|)
+## Latent variables:
+##   speed =~
+##     hund              1.000
+##     lj                0.500    0.100    5.013    0.000
+##     fourh             0.877    0.090    9.715    0.000
+##     h110              0.196    0.110    1.774    0.076
+##     r1500             0.131    0.086    1.532    0.126
+##   strength =~
+##     sp                1.000
+##     disc              0.789    0.075   10.458    0.000
+##     jav               0.476    0.071    6.657    0.000
+##   jump =~
+##     lj                1.000
+##     hj                1.476    0.278    5.316    0.000
+##     h110              1.152    0.232    4.954    0.000
+##     pv                1.059    0.218    4.863    0.000
+## 
+## Covariances:
+##   speed ~~
+##     strength          0.307    0.066    4.612    0.000
+##     jump              0.222    0.058    3.809    0.000
+##   strength ~~
+##     jump              0.257    0.057    4.476    0.000
+## 
+## Variances:
+##     hund              0.282    0.064    4.380    0.000
+##     lj                0.362    0.048    7.603    0.000
+##     fourh             0.448    0.062    7.257    0.000
+##     h110              0.558    0.065    8.570    0.000
+##     r1500             0.988    0.093   10.672    0.000
+##     sp                0.076    0.071    1.070    0.285
+##     disc              0.424    0.059    7.146    0.000
+##     jav               0.791    0.076   10.365    0.000
+##     hj                0.484    0.071    6.780    0.000
+##     pv                0.734    0.077    9.502    0.000
+##     speed             0.718    0.107    6.697    0.000
+##     strength          0.924    0.117    7.918    0.000
+##     jump              0.237    0.076    3.125    0.002
+</code></pre>
+
+<p>Let&#39;s inspect the residuals:</p>
+
+<pre><code class="r">resid(decmodfit, type = &quot;normalized&quot;)
+</code></pre>
+
+<pre><code>## $cov
+##       hund   lj     fourh  h110   r1500  sp     disc   jav    hj    
+## hund   0.000                                                        
+## lj     0.120  0.000                                                 
+## fourh  0.005 -0.264  0.000                                          
+## h110   0.050  0.076 -0.111  0.000                                   
+## r1500 -2.486  0.207  4.342 -0.790  0.000                            
+## sp     0.622  0.140 -1.175  0.059 -1.818  0.000                     
+## disc   0.555 -0.197 -0.631  0.565 -0.785  0.004  0.000              
+## jav   -0.541  0.221  0.031  0.159 -0.291  0.001 -0.105  0.000       
+## hj     0.174 -0.045  0.035 -0.093  2.044  0.013 -0.428 -0.156  0.000
+## pv    -0.526 -0.120  0.349 -0.072 -3.004 -0.473  0.372  1.630  0.279
+##       pv    
+## hund        
+## lj          
+## fourh       
+## h110        
+## r1500       
+## sp          
+## disc        
+## jav         
+## hj          
+## pv     0.000
+## 
+## $mean
+##  hund    lj fourh  h110 r1500    sp  disc   jav    hj    pv 
+##     0     0     0     0     0     0     0     0     0     0
+</code></pre>
+
+<p>Mimic the LISREL output:</p>
+
+<pre><code class="r">inspect(decmodfit, &quot;parameters&quot;)
+</code></pre>
+
+<pre><code>## $lambda
+##       speed strngt  jump
+## hund  1.000  0.000 0.000
+## lj    0.500  0.000 1.000
+## fourh 0.877  0.000 0.000
+## h110  0.196  0.000 1.152
+## r1500 0.131  0.000 0.000
+## sp    0.000  1.000 0.000
+## disc  0.000  0.789 0.000
+## jav   0.000  0.476 0.000
+## hj    0.000  0.000 1.476
+## pv    0.000  0.000 1.059
+## 
+## $theta
+##       hund  lj    fourh h110  r1500 sp    disc  jav   hj    pv   
+## hund  0.282                                                      
+## lj    0.000 0.362                                                
+## fourh 0.000 0.000 0.448                                          
+## h110  0.000 0.000 0.000 0.558                                    
+## r1500 0.000 0.000 0.000 0.000 0.988                              
+## sp    0.000 0.000 0.000 0.000 0.000 0.076                        
+## disc  0.000 0.000 0.000 0.000 0.000 0.000 0.424                  
+## jav   0.000 0.000 0.000 0.000 0.000 0.000 0.000 0.791            
+## hj    0.000 0.000 0.000 0.000 0.000 0.000 0.000 0.000 0.484      
+## pv    0.000 0.000 0.000 0.000 0.000 0.000 0.000 0.000 0.000 0.734
+## 
+## $psi
+##          speed strngt jump 
+## speed    0.718             
+## strength 0.307 0.924       
+## jump     0.222 0.257  0.237
+</code></pre>
+
+</body>
+
+</html>
+

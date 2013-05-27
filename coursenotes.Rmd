@@ -1,0 +1,886 @@
+SEM Course Notes
+========================================================
+## Professor Dan Bolt
+## Ed Sci 212 1-2:30pm
+
+
+# January 22nd, 2012
+### Introduction to Structural Equation Modeling
+### sem1.pdf
+
+Course notes are available in the notes folder. 
+
+* Class will use the LISREL model for describing SEM
+* Will explore both observed variable path analysis and latent variable/mixed variable analysis
+* SEM at its heart is about relationships -- matrices of variances and covariances, so matrix algebra is important
+* Kline text is the main text for the course
+
+** Homework is a two week due date from date it is given **
+
+** Final project is one month before finals part 1 is due; part 2 due during finals week**
+
+[Longitudinal analysis in lavaan](http://r.789695.n4.nabble.com/Structural-equation-modeling-in-R-lavaan-sem-td3409642.html)
+
+#### Introduction to SEM
+
+In SEM we think of correlations and covariances among variables are the units we are interested in analyzing, not individual observations and cases.
+
+In terms of model fit, we are always interested in how well the model recovers the covariance matrix. 
+
+In OLS we estimate an intercept, a slope, and a variance to minimize the sum of squares.
+
+SEM does something similar, but instead we estimate three parameters (a coefficient for how *x* predicts *y*, a variance for *x*, and a variance for error *$\zeta$*)
+
+This is important because SEM models usually comprise a network of regression equations. The goal is to estimate parameters in a whole system of equations that accounts for the covariances between the observed variables.
+
+```{r lecture1exampledata}
+library(lavaan)
+
+day1matrix<-matrix(c(1,0,0,.6,1,0,.33,.63,1),3,3,byrow=TRUE)
+
+colnames(day1matrix) <- rownames(day1matrix) <-
+   c("ILL","IMM","DEP")
+
+myN<-500
+print(day1matrix)
+# ILL = illness IMM= immune system DEP= depression
+```
+
+We could fit two models to this data:
+
+1. DEP influences IMM influences ILL
+2. IMM influences ILL influences DEP
+
+```{r day1models}
+
+day1mod1<-'ILL ~ IMM
+           IMM ~ DEP'
+
+day1mod1fit<-sem(day1mod1,sample.cov=day1matrix,sample.nobs=500)
+
+day1mod2<-'DEP ~ ILL
+           ILL ~ IMM'
+
+day1mod2fit<-sem(day1mod2,sample.cov=day1matrix,sample.nobs=500)
+
+summary(day1mod1fit)
+print(day1mod1fit)
+summary(day1mod2fit)
+print(day1mod2fit)
+```
+
+We have failed to show that the model does not fit, that is, there is no evidence from the data to indicate model I is inappropriate. With model II, we do reject the null hypothesis, which is that model II fits the data. 
+
+Suppose model III comes along:
+
+```{r day1models2}
+#library(psych)
+day1mod3<-'DEP ~ IMM
+           IMM ~ ILL'
+
+day1mod3fit<-sem(day1mod3,sample.cov=day1matrix,sample.nobs=500)
+print(day1mod3fit)
+summary(day1mod3fit)
+#lavaan.diagram(day1mod1fit,simple=FALSE)
+```
+
+This shows that model I is not the only model that fits the data. Model III fits the data as well. So in this case we cannot use the data to distinguish between these models, but we can use theory.
+
+In this example it only makes sense that the IMMUNE system should be influencing ILLNESS, and that the relationship should not run in the other direction.
+
+SEM can account for measurement error by having multiple measures to allow the construction of a latent variable to examine the relationship of our constructs, and not their measurements alone. 
+
+```{r, echo=FALSE, results='hide'}
+rm(day1matrix,day1mod1,day1mod1fit,day1mod2,day1mod2fit,day1mod3,day1mod3fit,
+   myN)
+```
+
+# January 27th, 2012
+### Matrix Algebra Review
+### sem2.pdf
+
+Matrix algebra is a cornerstone of the LISREL model. 
+
+Square matrices are easy.
+
+```{r readinmatrix}
+mat1<-matrix(c(1,0,0,
+                .6,1,0,
+                .33,.63,1),3,3,byrow=TRUE)
+
+mat2<-matrix(c(7,0,0,
+                .4,2.8,0,
+                .3,.9,1.3),3,3,byrow=TRUE)
+
+# Multiply
+mat1 %*% mat2
+
+# Transpose
+t(mat1)
+
+# Transpose and multiply
+
+t(mat1) %*% mat2
+
+```
+
+
+Non-square matrices
+
+```{r readinmatrixday2}
+mat3<-matrix(c(1,0,0,
+                .6,1,0,
+                .33,.63,1),3,3,byrow=TRUE)
+
+mat4<-matrix(c(7,0,
+                .4,2.8,
+                .3,.9),3,2,byrow=TRUE)
+
+mat3 %*% mat4
+# works
+mat4 %*% mat3
+# does not
+
+mat4 %*% t(mat3)
+# does not
+
+t(mat4) %*% mat3
+
+```
+
+In R we can also take covariances. 
+
+```{r covariance}
+vec1<-c(1,4,5,-2) # mu = 2
+vec2<-c(8,14,10,4) # mu = 9
+mu1<-mean(vec1)
+mu2<-mean(vec2)
+n<-length(vec1)
+
+mycov<-n^-1*sum((vec1-mu1)*(vec2-mu2))
+mycov
+
+# In R this is different since n-1 is used
+cov(vec1,vec2,method="pearson")
+```
+
+Be careful in R, we need a different formula to do this:
+
+```{r adjcovariance}
+cov_adj<-function(x,y,...){
+  mu1<-mean(x)
+  mu2<-mean(y)
+  n<-length(x)
+  mycov<-n^-1 * sum((x-mu1)*(y-mu2))
+  print(mycov)
+}
+
+cov_adj(vec1,vec2)
+```
+
+The variance of a variable is the covariance of that variable with itself. This is represented on the diagonal of the variance-covariance matrix. Variances always have to be positive. A variance of 0 means the variable is a constant.
+
+A correlation simply divides the covariances by the square root of the variance for each variable.
+
+```{r correlation}
+sig1<-sd(vec1)
+sig2<-sd(vec2)
+mycor<-n^-1 * sum(((vec1-mu1)/sig1)*(vec2-mu2)/sig2)
+mycor
+
+cor(vec1,vec2)
+```
+
+We see again that in R the correlation is using a funky denominator (which only matters in small group sizes).
+
+```{r corradj,eval=FALSE}
+# THIS IS WRONG!
+cor_adj<-function(x,y,...){
+  mu1<-mean(x)
+  mu2<-mean(y)
+  n<-length(x)
+  sig1<-sqrt(sum(x^2-mu1))
+  sig2<-sqrt(sum(y^2-mu2))
+  mycor<-n^-1 * sum(((x-mu1)/sig1)*((y-mu2)/sig2))
+  print(mycor)
+}
+
+cor_adj(vec1,vec2)
+
+```
+
+#### Consider Regression
+
+$$y = \alpha + \gamma x + \zeta$$
+
+We want to look at what the $cov(x,y)$ is that can estimate the parameters of this regression. How can we reparameterize it? We have two variables $x$ and $y$ and we also have a variance of $\zeta$ known as $\psi$. The variance of $x$ is represented as $\phi$.
+
+Now we can rewrite the first equation above as:
+
+$$cov(x,y) = cov(x, \alpha + \gamma x + \zeta)$$
+
+We can apply covariance rules to rewrite this as:
+
+$$cov(x,y) = cov(x,\alpha) + cov(x, \gamma x) + cov(x,\zeta)$$
+
+Since $\alpha$ is a parameter, and a constant, this reduces to 0, because of the first rule of covariances (any variable's covariance with a constant is 0). The second covariance reduces to $\gamma * \phi$. In regression we assume the final $cov(x,\zeta)$$ is 0 - by assumption. 
+
+In the end if this model is true, then the $cov(x,y) = \gamma * \phi$, or $\gamma$ multiplied by the variance of $var(x)$.
+
+```{r matrixops}
+# create an identity matrix
+diag(5)
+
+# Transpose
+mat1
+t(mat1)
+
+# Inverse
+solve(mat1)
+               
+```
+
+
+
+# January 29th, 2012
+### The LISREL Model
+### sem3.pdf
+
+Two model types in LISREL: a **structural** model (sometimes called latent variable model) and a **measurement** model.
+
+The structural part describes the relationships between the latent variable, while the measurement part describes how latent variables are related to observed variables. 
+
+The model is concerned with the causal associations among the latent variables. 
+
+Placeholder for real LISREL model image below:
+
+```{r LISRELplot,echo=FALSE}
+
+model <- ' 
+  # latent variable definitions
+     ind60 =~ x1 + x2 + x3
+     dem60 =~ y1 + a*y2 + b*y3 + c*y4
+     dem65 =~ y5 + a*y6 + b*y7 + c*y8
+
+  # regressions
+    dem60 ~ ind60
+    dem65 ~ ind60 + dem60
+
+  # residual correlations
+    y1 ~~ y5
+    y2 ~~ y4 + y6
+    y3 ~~ y7
+    y4 ~~ y8
+    y6 ~~ y8
+'
+
+library(devtools)
+dev_mode()
+library(semPlot)
+fit <- sem(model, data=PoliticalDemocracy)
+semPaths(fit,whatLabels="est",style="lisrel",
+         residuals=TRUE)
+dev_mode()
+```
+
+Key components are circles for latent variables, squares/rectangles for observed variables, path arrows for connections between them, and coefficients between them.
+
+In LISREL we make a distinction between **endogenous** and **exogenous** variables. Variables which are **endogenous** are predicted by another variable in the model, **exogenous** variables are not predicted by another variable. 
+
+#### Four Coefficient Matrices
+
+$$\eta=\beta_{\eta}+\Gamma \xi + \zeta$$
+$$x=\delta_{x} \psi + \delta$$
+$$y=\delta_{y} \eta + \epsilon$$
+
+
+In this model we have four coefficient matrices and we can specify them using equations above. We have other matrices as well that we can use to understand the model
+
+#### Covariance Matrices
+
+Four square symmetric matrices that are part of the models, for $\xi$, $\zeta$, for $\delta$ and $\epsilon$ terms. 
+
+The matrix of $\zeta$ s is defined by the number of $\zeta$ s and is known as the $\Psi$ matrix. 
+
+The matrix of $\xi$ s is known as the, defined by the number of $\xi$ s we have. This is known as the $\Phi$ matrix. 
+
+The matrix of $\delta$ is known as $\theta_{\delta}$. This is defined by the number of $\delta$ terms in the model. 
+
+The matrix for the $\epsilon$ s is known as the $\theta_{\epsilon}$ matrix. This is defined by the number of $\epsilon$ terms. The diagonal has all the variances, the off diagonal includes any relationships between the $\epsilon$ terms that are "unanalyzed associations".
+
+$$p = number of ys$$
+$$q = number of xs$$
+$$m = number of \eta 's$$
+$$n = number of \xi 's$$
+
+
+# February 5th, 2013
+### LISREL Notation
+### sem5.pdf
+
+In a measurement model, every latent variable is an exogenous latent variable. 
+
+```{r measurementmodelexample}
+
+model2 <- ' 
+  # latent variable definitions
+     ind60 =~ x1 + x2 + x3
+     dem60 =~ y1 + a*y2 + b*y3 + c*y4
+     dem65 =~ y5 + a*y6 + b*y7 + c*y8
+
+  # residual correlations
+    y1 ~~ y5
+    y2 ~~ y4 + y6
+    y3 ~~ y7
+    y4 ~~ y8
+    y6 ~~ y8
+'
+
+fit2 <- sem(model2, data=PoliticalDemocracy)
+semPaths(fit2,whatLabels="est",style="lisrel",
+         residuals=TRUE)
+
+```
+
+
+No longer need a $\Beta$ matrix, no $\Psi$ matrix, and no $\Gamma$ matrix. Also the $\lambda_{y}$ matrix is no longer necessary because there are no endogenous latent variables in the model, and we are not making any predictions. 
+
+Three remaining matrices that we need are the $\theta^{\delta}$, the $\Phi$, and the $\lambda_{x}$ matrices. 
+
+
+### Observed Variable Path Analysis
+
+In this analysis we assume the variables are measured without error. 
+
+
+```{r pathanalysisexamples}
+model3 <- ' 
+  # latent variable definitions
+    y1 ~  x1 + x2 + x3
+    y2 ~ y1 + y2 + y3
+    
+  # residual correlations
+    #y1 ~~ y5
+    #y2 ~~ y4 + y6
+    #y3 ~~ y7
+    #y4 ~~ y8
+    #y6 ~~ y8
+'
+
+fit3 <- sem(model3, data=PoliticalDemocracy)
+semPaths(fit3,whatLabels="est",style="lisrel",
+         residuals=TRUE)
+
+```
+
+For path analysis we only need our $\Beta$, $\Gamma$, $\phi$ and $\Psi$ matrices. 
+
+X or exogenous variables are variables with arrows exiting them, endogenous or y variables are variables with arrows entering them.
+
+N * (N+1) / 2 gives you the size of the variance, covariance matrix. 
+
+E.g.  4 variables = (4*5/20) = 10 
+
+
+# February 7th, 2013
+### A LISREL Model
+### sem6.pdf
+
+This class we will look at a LISREL model of political democracy
+
+```{r loaddatapolidem}
+data(PoliticalDemocracy)
+names(PoliticalDemocracy)
+```
+
+Below, this should be the model spelled out for `lavaan`:
+
+```{r echo=TRUE, tidy=FALSE}
+model <- ' 
+  # latent variable definitions
+     ind60 =~ x1 + x2 + x3
+     dem60 =~ y1 + y2 + y3 + y4
+     dem65 =~ y5 + y6 + y7 + y8
+
+  # regressions
+    dem60 ~ ind60
+    dem65 ~ ind60 + dem60
+
+  # residual correlations
+    y1 ~~ y5
+    y2 ~~ y4 + y6
+    y3 ~~ y7
+    y4 ~~ y8
+    y6 ~~ y8
+'
+
+```
+
+And here is the call to fit the model:
+
+```{r polidemmodelfit, echo=TRUE}
+fit1 <- sem(model, data=PoliticalDemocracy,
+            representation="LISREL", mimic="EQS")
+# LISREL gives us compatible output
+myplot <- semPaths(fit1,whatLabels="est",style="lisrel",
+         residuals=TRUE)
+
+myplot$labels[grepl("d65",myplot$labels)] <- paste0("*x",1)
+myplot$labels[!grepl("x|y|z",myplot$labels)] <- paste0("*h",1:2)
+#myplot$labels[grepl("x",myplot$labels)] <- paste0("*n",1:3)
+qgraph(myplot)
+
+```
+
+Let's inspect the output. For S4 objects we need to see what we get
+
+```{r lavaansemoutput, echo=TRUE}
+slotNames(fit1)
+slotNames(fit1@Model)
+names(fit1@Model@GLIST)
+fit1@Model@GLIST$beta
+slotNames(fit1@SampleStats)
+fit1@SampleStats@cov
+parameterEstimates(fit1, standardized=TRUE)
+fitMeasures(fit1)
+resid(fit1, type="normalized")
+inspect(fit1, "rsquare")
+```
+
+
+# February 19th, 2013
+### Identification Conditions for Path Models
+### sem8.pdf
+
+We can divide rules about identification conditions into necessary conditions, and sufficient conditions:
+
+1. **Recursive rule** - when we have errors that are uncorrelated with each other, and no feedback loops / reciprocal paths; models that are recursive are *statistically identified*
+2. **The algebraic method** - specify the model and look at the relationship between parameters and covariance elements and make sure that for each parameter it is defined only by elements within the covariance matrix. 
+
+For a three variable mediation model [x1 -> y1 -> y2] :
+
+$$\phi_{11} = \sigma_{11}$$
+$$\gamma_{11} = \frac{\sigma_{21}}{\sigma_{21}}$$
+$$\psi_{11} = \sigma_{22} - \frac{\sigma_{21}}{\sigma_{21}} - \sigma_{11}$$
+$$\beta_{21} = ??$$
+$$\psi_{22} = ??$$
+
+3. **The t-rule** - if you have more parameters than you have elements in your variance-covariance matrix, then the model is not identified. Cannot be used of evidence that a model is identified, only that it is not identified.
+4. **The null $\beta$ rule** -  if the $\beta$ matrix contains all 0s, then the model is is identified. This is a sufficient condition, but not a necessary one. As long as I don't have ys predicting other ys, then the model is statistically identified. 
+
+#### The next two rules only apply when all elements of the $\psi$ matrix are unrestricted
+
+5. **The order rule** - (necessary, but not sufficient for identification) construct a matrix with as many rows as y variables, and then include the identity matrix minus $\beta$ and the negation of the $\Gamma$ matrix. Columns will correspond to the four variables. 
+
+$$ \begin{matrix} var & y1 & y2 & x1 & x2 \\ y1 & I - \beta & & - & \Gamma \\
+   y2 &  &  & & & \end{matrix}$$
+   
+Which in practice looks like: 
+
+$$\begin{matrix} var & y1 & y2 & x1 & x2 \\ y1 & 1 & 0 & -\gamma_{11} & -\gamma_{12} \\ y2 & -\beta_{21}  & 1  & -\gamma_{21} & -\gamma_{22} \end{matrix}$$
+
+The number of 0s in each row must be greater than *p-1*. Constraining paths will allow the above model to be identified potentially. Changing $\beta{_21}$ to 0 would do this. 
+6. **The rank rule** - Delete all columns in the above matrix where there is a 0. If the rank of the resulting matrix is equal to *p-1* then the equation is identified, and if all equations are identified, then the model is identified. 
+
+For all of these, empiricial underidentification can occur if the data turns out to violate some of the assumptions that the identification rules may assume. 
+
+#### Practically speaking, we can use methods in statistical software to help us with this. 
+
+- Software model checks
+- Rerun the analysis using different starting values and test for changes in parameter estimates, if parameter estimates change, then there is a problem likely
+- Fit the model to the observed covariance matrix, then fit another model using the fitted covariance matrix from that model, and fit the same model again, parameter estimates should remain constant
+
+```{r refitting}
+fit1 <- sem(model, data=PoliticalDemocracy,
+            representation="LISREL", mimic="EQS")
+newdata <- fitted.values(fit1)$cov
+
+fit2 <- sem(model, sample.cov=newdata, sample.nobs=nrow(PoliticalDemocracy),
+          representation="LISREL", mimic="EQS")
+
+coef(fit1) - coef(fit2)
+```
+ 
+In this example, because the difference between the coefficients is 0 across the board, this indicates the model did converge well. 
+
+- Another option is to look at standard errors in the solution. Extremely large standard errors are  a problem. 
+
+```{r inspectstandarderrors}
+inspect(fit1, "se")
+```
+
+
+- Improper solutions, where variances are negative, which is not possible.
+
+#### Block Recursive Models
+
+A special class of models that rules have special identification rules applied to them. Block recursive models are:
+- Models where y variables can be grouped into blocks where the $\zeta$ have errors correlated, and 
+- unidirectional effects between the blocks
+
+#### How to handle identification problems
+- Add x variables
+- Constrain correlations between $\psi$ s that are involved in feedback loops to 0
+- Constrain parameters as being equal, being 0, or proportional
+- Delete paths from the model
+
+# February 21rd, 2013
+### Estimation Methods
+#### sem9.pdf
+
+The whole purpose in estimating a model is to find values of parameters that leads to a fitted covariance matrix that is as close as possible to the data (covariance matrix) 
+
+The sampel covariance matrix is referred to as $S$ and the fitted covariance matrix is $\hat\Sigma$. Our goal is to minimize the distance between $S$ and $\hat\Sigma$. 
+
+In `lavaan` we have a number of arguments we can pass to the `estimator` option in the fitting function for these: "ML", "GLS", "WLS", "ULS", and "DWLS" are the main. 
+
+#### Maximum Likelihood
+
+Often the preferred estimator. Robust to non-normality in terms of estimates, but not statistical tests (need robustness for this). 
+
+Parameter estimates have some nice properties: 
+- consistent
+- asymptotically unbiased
+- efficient
+- normally distributed
+- scale free
+- scale invariant
+- a $\Chi^{2}$ test is possible to evaluate model fit
+
+ML output is more susceptible to improper solutions than other methods.
+
+#### Unweighted Least Squares (ULS or LS)
+
+Minimize the sum of squares in the residual matrix. Viewed as less attractive sometimes. 
+
+Advantages:
+- statistically consistent parameter estimates
+- no distributional assumptions of variables
+- simplicity
+- can compute tests for statistical significance of model parameters
+
+Disadvantages:
+- parameter estimates and fit index are scale dependent
+- parameter estimates are not asymptoticaly efficient
+- no overall test of fit
+
+#### Generalized Least Squares (GLS)
+
+A weight matrix $W$ is used to modify the LS estimator to control for unequal variances or nonzero correlations among equation errors
+
+Very similar to maximum likelihood.
+
+Advantages:
+- Parameter estimates are consistent, efficient, and unbiased
+- asymptotically normally distributed
+- Scale invariant and scale free (weight matrix compensates for weights to variables)
+- $\chi^{2}$ test is available for model fit
+
+Disadvantages:
+- Not that different from ML
+
+# February 25th, 2013
+### Model Fit Statistics
+#### sem10.pdf
+
+
+#### $\chi^{2}$ Test 
+
+Essentially a yes or no test of whether the model fits or not. Which can be a very conservative way to evaluate model fit. The smaller the number, the better the model fit.
+
+- $\chi^{2}$ test has no upper bound
+- $\chi^{2}$ is very influenced by sample size, as the sample gets larger, the same amount of model fit implies a larger amount of misfit; large samples with small differences can claim misfit
+- Heavily influenced by the number of parameters in the model, as the number of parameters increases, the $\chi^{2}$ value decreases. This will make us tend always toward a more complex model. 
+
+#### Other of goodness of fit indices
+
+- Are often normalized
+- Often include penalties for model complexity to capture the belief we prefer simpler models over more complex models
+
+These indices can be classified and grouped:
+
+*Incremental Fit Indices*
+- Make comparisons to null model, which in this case is defined as the model where the correlations between all the variables in the model is 0
+- Now we compare how much the proposed model improves the fit on the model with no paths at all
+- Thus we get a $\chi^{2}_{M}$ for the model we propose and a $\chi^{2}_{N}$ for the null model; and we also have a $df_{M}$ and $df_{N}$
+- The null model will always be simpler and have fewer degrees of freedom
+- Examples: NFI (Bentler-Bonnett Normed Fit Index) scaling the reduction in model $\chi^{2}$ compared to the null model $\frac{\chi^{2}_{N} - \chi^{2}_{M}}{\chi^{2}_{N}}$
+- 0 is a poor fit, 1 is a good fit 0.95 is ideal
+- NNFI (Tucker-Lewis Index TLI)  $\frac{\frac{\chi^{2}_{N}}{df_{N}} - \frac{\chi^{2}_{M}}{df_{M}}}{\frac{\chi^{2}_{N}}{df_{N}}-1}$
+- This index can climb above 1
+- Parsimony normed fit index (PNFI) $\frac{df_{M}}{df_{N}}NFI$
+- CFI (Comparative Fit Index) $$1-\frac{Max(\chi^{2}_{M}-df_{M}, 0)}{Max(\chi^{2}_{M}-df_{M},\chi^{2}_{N}-df_{N}, 0)}$$
+- Incremental Fit Index
+- Relative Fit Index
+- CFI and NNFI are most popular to report
+
+*Indices based on population error of approximation*
+
+Based on a recognition that we do not have a population. Adjust the minimum fit function to account for the errors in the approximation of the population. 
+
+- PDF
+- RMSEA 
+
+$$\sqrt{\frac{\frac{\chi^{2}_{M}}{n}}{df_{M}}-\frac{1}{n}}$$
+- Low values imply a well fitting model 
+
+*Indices based on model parsimony*
+
+Used to compare models of different model fits.
+
+- Akaike Information Criterion (AIC) $\chi^{2}_{M} - 2df_{M}$
+- Consistent AIC (CAIC) $\chi^{2}_{M} - log_{c}(n+1)df_{M}$
+- When reported it shows the AIC of the independence and the saturated model to show the bounds around the AIC for the current model
+- The smaller the value the better here, and the more simple models have a better chance due to the penalty for having additional model parameters
+- BIC and others fall within this category
+
+*Residual-based Indices*
+- Root mean square residual (RMR): average size of the residual on the estimated covariance matrix (scale dependent, smaller is better)
+- Standardized RMR (SRMR) is the average size of the residual on the estimated correlation matrix (between 0 and 1); ideally .05 or lower
+- Goodness of Fit Index (GFI) proportion of variability in the covariance elements explained by the model fitted covariance $S$ basedo on the data and the $\hat\Sigma$ matrix estimated by the model
+- GFI takes comparison between $S$ and $\hat\Sigma$ elements, looking at their correlation, square it, and get the GFI: regressing the $S$ values onto the $\hat\Sigma$ values (0.95 or higher are good values)
+- Adjusted GFI (AGFI) corrected for shrinkage
+
+#### Remember
+
+- Model fit indices refer to the fit of the whole model. Pieces of the model may fit quite well. A single path that does not fit well can dramatically reduce model fit indices. 
+- Fit indices may be good, but parameter estimates may be inconsistent with theoretical expectations. Always need to inspect path estimates.
+- Indices can indicate good fit, but predictive power can be low still. This occurs especially when you have a large sample, but the relationships among your variables is not that large. This improves over the independence model, but does not explain much real variation in your outcome.
+
+#### Model Fit Recommendation
+
+Hu and Bentler (1999)
+
+- Two index approach 
+- SRMR of .08 or lower indicates fit
+- Report another index (one of TLI, CFI, RMSEA)
+- Suggested cutoffs TLI(NNI) .95 / CFI .9 / RMSEA .06
+
+#### Hierarchical Relations Among models
+
+Two models are considered hierarchically related if you can go from one to the other only by adding or only by deleting paths (you can't add *and* remove paths)
+
+One model can be viewed as a special case of another model where one or more paths are fixed to 0 
+
+From initial model, define one that is a special case of the initial model and one that is a non-hierarchically related model (remove and add a path to initial model).
+
+
+# February 28th, 2013
+### Model Fit Statistics
+#### sem10.pdf
+
+We often want to inspect the residuals to see which paths are causing problems in model fit. Large positive residuals indicate the path is underestimating the relationship between two variables. Restricting paths could be good to fix this. Large negative residuals indicate the path is overestimating the relationship between two variables, and adding a path between these variables may help. 
+
+To compare two models we can do a statistical test with hierarchically related models. A $\chi^{2}$ fit test says that we are evaluating a null hypothesis where there is no difference in the fit between the two models. The difference between the two $\chi^{2}$ is distributed $\chi^{2}$, we can conduct a test of significance using this difference, and the difference in the degrees of freedom in the two models as the $df$ for the $\chi^{2}$ test. 
+
+#### Modification Fit Indices
+
+Based on looking at how model fit will change in response to constraining paths. This is estimated using a LaGrange Multiplier. For a modification index about **3.84** would suggest that if that path is added, the $\chi^{2}$ should drop enough to make a statistically significant difference. 
+
+#### Equivalent Models
+
+However, a better way to do this is to use modification indices. 
+
+# March 7th, 2013
+### Measurement Models
+### sem12.pdf
+
+Why should we be concerned about measurement error?
+
+The relationship between $\gamma_{1}^{*}$ and $\gamma_{1}$ is affected by other factors, and not just the reliability or measurement error of $x_{1}$ and $y$. 
+
+
+```{r measurement}
+measmatrix <- matrix(c(1,.6,.33,.4,.6,1,.63,.21,.33,.63,1, .11, .4, .21, .11, 1 ),4,4,byrow=TRUE)
+
+colnames(measmatrix) <- rownames(measmatrix) <-
+   c("x1","x2","x3", "y1")
+
+myN<-500
+
+
+measmod <- 'y1 ~ factor
+           eta =~ x1 + x2 + x3'
+
+measmodfit <- sem(measmod,sample.cov=measmatrix,sample.nobs=myN)
+
+summary(measmodfit)
+```
+
+Let's look at the plot of this:
+
+```{r measmodplot}
+dev_mode()
+library(semPlot)
+semPaths(measmodfit,whatLabels="est",style="lisrel")
+dev_mode()
+```
+
+Now consider the example in the notes:
+
+```{r jobsatismodel}
+jobsatis <- matrix(c(1.0, .2, .2, 1.0), 2,2, byrow=TRUE)
+
+colnames(jobsatis) <- rownames(jobsatis) <- c("JSO", "ACHO")
+
+myN<-200
+
+jobmod <- ' JSL ~ ACHL
+            JSL =~ JSO
+           ACHL =~ ACHO'
+
+jobmodfit <- cfa(jobmod,sample.cov=jobsatis,sample.nobs=myN)
+
+summary(jobmodfit)
+```
+
+And another model with mediation:
+
+
+```{r mediationmodel}
+mediationmod <- matrix(c(1, .07, .07, .07, 1, .2, .07, .2, 1), 3, 3, byrow=TRUE)
+
+colnames(mediationmod) <- rownames(mediationmod) <- c("EXPO", "JSO", "ACHO")
+
+myN<-200
+
+medmod <- ' JSL ~ EXPL  
+            EXPL ~ ACHL
+            EXPL =~ EXPO
+            JSL =~ JSO
+           ACHL =~ ACHO'
+
+medmodfit <- cfa(medmod,sample.cov=mediationmod,sample.nobs=myN)
+
+summary(medmodfit)
+```
+
+Remember that LISREL will set the error variances of the latent variables to being free. 
+
+#### Pure Measurement Models
+
+Everything to estimate a pure measurment model can be estimated with three matrices: $\lambda_{x}$, $\phi$ and the $\theta_{\delta}$. 
+
+In a measurement model there is a distinction between reflective indicators of latent variables and formative indicators of latent variables. The paths go from the latent variable out to the measures of the effect, because the latent variable is leading to the higher observed values of the measures. The latent variable is fixed and observed variables are **reflections** of it. 
+
+$\xi$ is a reflection of the $x$'s. 
+
+There are lots of settings where a group of variables are considered as part of a collection, and people want to think about them giving a latent variable a definition, and these are known as **formative** indicators of the latent variable. 
+
+In the **formative** setting there is no expectation about the correlation structure among the $x$'s. In a **reflective** setting, $\xi$ is defined by the correlation among the $x$'s and will wind up having no variance itself if the $x$'s do not have much correlation. 
+
+To check for this: 
+1. Check the fit of the measurement model. 
+2. There will be large heterogeneity among the loadings and won't line up with descriptive statistics. 
+3. There will be a very low variance for the $\xi$. 
+4. You can't figure out how to interpret what the variable means. 
+
+If you have a **formative** setting, then you can create a composite of these variables and use that composite as an observed variable in your model as an observed and not a latent variable. 
+
+$$x_{1} = \lambda_{11}\xi_{1} + \delta_{1}$$
+$$x_{2} = \lambda_{21}\xi_{1} + \delta_{2}$$
+
+Now we need to understand that we can reduce down the covariance among the $x$'s using the variables we already have:
+
+$$Cov(x_{1}, x_{2}) = Cov(\lambda_{11}\xi_{1} + \delta_{1}, \lambda_{21}\xi_{1} + \delta_{2})$$
+
+Which reduced to: 
+
+$$\lambda{11}\lambda{21}\phi_{11}$$
+
+This is the product of the two factor loadings of the $x$'s on the $\xi$ and the $Var(\xi)$. In some cases, we set $Var(\xi) = 1$ in which case this covariance is actually equal entirely to $\lambda_{11}\lambda_{21}$. 
+
+
+# March 12th, 2013
+### Confirmatory Factor Analysis
+### sem13.pdf
+
+```{r cfamodels}
+cfamatrix1 <- matrix(c(1, .39, .35, .21, .32, .40, .39, .39,
+                         .39, 1, .67, .11, .27, .29, .32, .29, 
+                         .35, .67, 1, .16, .29, .28, .3, .37, 
+                         .21, .11, .16, 1, .38, .30, .31, .42,
+                         .32, .27, .29, .38, 1, .47, .42, .48,
+                         .4, .29, .28, .30, .47, 1, .41, .51,
+                         .39, .32, .3, .31, .42, .41, 1, .42,
+                         .39, .29, .37, .42, .48, .51, .42, 1), 8, 8, byrow=TRUE)
+
+colnames(cfamatrix1) <- rownames(cfamatrix1) <- c("handmov","numbrec", "wordord", "gesclos","triangle", "spatmem", "matanalg", "photser")
+
+myN<-200
+
+cfamod1 <- ' Sequent =~ handmov + numbrec + wordord  
+            Simult =~ gesclos + triangle+ spatmem + matanalg+ photser
+            '
+cfamodfit <- cfa(cfamod1,sample.cov=cfamatrix1,sample.nobs=myN, mimic="EQS", 
+                 sample.cov.rescale=FALSE)
+
+summary(cfamodfit, standardized=TRUE)
+
+```
+
+
+
+To extract the squared multiple correlations:
+
+```{r smc, echo=TRUE}
+library(psych)
+smc(cfamatrix1, covar=TRUE)
+```
+
+To look for misfit, let's examine the residuals:
+
+```{r cfaresiduals, echo=TRUE}
+resid(cfamodfit, type="normalized") # type can be switched between
+# normalized, standardized, and raw
+
+mi <- modindices(cfamodfit)
+# Phi
+mi[mi$op == "=~" & mi$mi > 0, ]
+# Theta-Delta
+mi[mi$op == "~~" & mi$mi > 0, ]
+```
+
+Factor loading decisions can be somewhat arbitrary, but should be driven by theory. It becomes more complicated to interpret the factors the more associations you free up among them and the variables loading onto them, so being careful and thinking about interpretation is an important element to consider. The best fitting measurement model may not be the most useful for interpretation. 
+
+#### Misspecification Example of CFA
+
+
+```{r decathalon}
+decmatrix <- matrix(c(1, .59, .35, .34, .63, .40, .28, .2, .11, -.07,
+                      .59, 1, .42, .51, .49, .52, .31, .36, .21, .09, 
+                      .35, .42, 1, .38, .19, .36, .73, .24, .44, -.08, 
+                      .34, .51, .38, 1, .29, .46, .27, .39, .17, .18, 
+                      .63, .49, .19, .29, 1, .34, .17, .23, .13, .39, 
+                      .40, .52, .36, .46, .34, 1, .33, .32, .18, .00, 
+                      .28, .31, .73, .27, .17, .32, 1, .24, .34, -.02, 
+                      .20, .36, .24, .39, .23, .33, .24, 1, .24, -.02, 
+                      .11, .21, .44, .17, .13, .18, .34, .24, 1, .17, 
+                      -.07, .09, -.08, .18, .39, .00, -.02, -.17, 0, 1), 10, 10, byrow=TRUE)
+
+colnames(decmatrix) <- rownames(decmatrix) <- 
+  c("hund","lj", "sp", "hj","fourh", "h110", "disc", "pv", "jav", "r1500")
+
+myN<-230
+
+decmod1 <- ' speed =~ hund + lj + fourh + h110 + r1500  
+            strength =~ sp + disc + jav
+            jump =~ lj + hj + h110 +pv
+            '
+decmodfit <- cfa(decmod1,sample.cov=decmatrix,sample.nobs=myN, mimic="EQS",
+                 sample.cov.rescale=FALSE, std.lv=FALSE)
+summary(decmodfit)
+```
+
+Let's inspect the residuals:
+
+```{r decresid}
+resid(decmodfit, type="normalized")
+```
+
+Mimic the LISREL output:
+
+```{r decpar}
+inspect(decmodfit, "parameters")
+```
+

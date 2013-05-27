@@ -1,0 +1,387 @@
+# **SEM Workshop Day 1**
+## 1/7/2013
+## College Park, MD
+
+---------------
+
+### Intro
+
+
+* **Path Analysis** is a combination of regression and theory that allows a structure to be fit on series of observed variables
+* **Exploratory Factor Analysis** uses correlations of observed data (Principal Compoonent Analysis) and says that some underlying factor is driving the relationship between and across groups (an unobserved factor) *devised by Charles Spearman* 
+* **Confirmatory Factor Analysis**--like EFA, but asks you to force a theory on the data and fit a model (stated number of factors, shape of factors, etc.)
+* **SEM** is a combination of path analysis and CFA
+	* Sometimes referred to as Covariance Structure Modeling
+	* LISREL (Linear Structural Relations) causal modeling
+	* Causal modeling
+
+Two notational systems used often: Bentler-Weeks (BW) and Joreskog-Keesling-Wiley (JKW)
+
+* JKW uses greek terminology, BW uses shapes and letters jointly
+* Use arrows to connect things in our model, arrows have a hypothesized structural/causal effect
+	* Non-directional arrows show non-structural/non-causal covaraiation or variation 
+	* This does not mean they cause each other, but are related in a non-causal method
+
+
+When data is standardized, a common notation is to use *p* to denote path, with the notation that *p* is denoted with numbers for the to and from so a path from variable 3 to variable 4 is *p43* and *r* is used to denote non-causal paths
+
+For non-standardized models, where variables are not in z-scores and have their own units, and then paths become represented with *b*, *beta* (again, to, and from *b43* represents a path to V4 from V3). Non-causal paths are represented with *c* reflecting the degree of covariation between two variables. 
+
+Hancock-Mueller *a-b-c* Notation for Unstandardized Models
+
+### SEM Family of Modeling
+
+Underneath SEM, there are a number of different analyses/methods available
+
+* Measured variable path analysis
+* Analysis of Variance
+* Confirmatory Factor Analysis
+* Latent Variable Path Analysis
+* Canonical Correlation
+* Multiple Regression
+
+
+When we have multiple endogenous variables in a system, each endogenous variable gets its own equation
+
+### Path Tracing Rules in Path Analysis
+
+1. One can go forward or backward causally, but once forward, you cannot go backward
+2. One can go through only one unanalyzed relation (two-headed arrow); no jumps allowed
+3. One can enter a variable no more than once; one can leave a variable no more than once (no loops)
+
+-------------
+
+#### Afternoon (p. 59- in notes)
+
+### Unstandardized Path Analysis
+
+* Has new rules for path tracing
+* If one, and only one, *locally exogenous element*, exists in a trace, multiply the product of the trace's unstandardized path coefficients by that element's variance
+	* This locally exogenous element can be a variable, a factor, error, or disturbance, behaving as exogenous in a given trace
+
+This adjustment is done to enusre that our path coefficients are measured in the correct units in the unstandardized framework
+
+##### LISREL/SIMPLIS Example
+
+* SIMPLIS is a name for the syntax language in LISREL
+
+**SIMPLIS Examples** folder contains all the syntax for all the models in the presentation/handouts
+
+**SIMPLIS Exercises** contains exercises to work on in the class/supplement
+
+**SIMPLIS Solutions** contains the answers to the exercises
+
+------------------
+
+### Model Identification
+
+Need to estimate fewer parameters than unique pieces of information provided by the variance covariance matrix
+
+### Model Estimation
+
+pp. 92 - 
+
+Most estimators are based on the multivariate normality assumption, representing jointly V1, V2, V3... as a multidimensional normal distribution
+
+* **this is often suspect**
+* Maximum Likelihood is the most common
+
+*F* is described as the *discrepancy function* which derives our estimator
+
+
+----------
+
+### Fit Indices
+
+#### Absolute
+
+Observed vs. model implied var/cov matrix
+These models improve when more parameters are added.
+Never punish uselessly complex models
+
+* Model Chi-Sq statistic (chisq)
+	* information - parameters = df
+	* Smaller values indicate better fit
+	* Sensitive to sample size
+	* Not a good index in practice; this only differentiates between right/wrong models, which is not useful (all models are wrong)
+* Standardized Root Mean Squared Residual (SRMR)
+	* Takes all the residuals between observed var/cov and takes the average
+	* Pretty good index; smaller values are better
+* Goodness of Fit Index
+	* Invented for LISREL
+	* 1 - (ratio of residual variance/covariance over standardized var/cov)
+	* Not used much anymore
+
+#### Parsimonious Model Fit Indices
+
+Adjust for model complexity. Will improve for more complex models, but only when additions are making useful contributions. 
+
+* Akaike Information Criterion (AIC)
+	* Created independent of any modeling strategy (applied in many domains)
+	* Chi-sq of model + 2x number of parametrs in the model
+	* BIC and others are variations of this
+	* Smaller values indicate better fit, values are relative and intended for comparing models (where a smaller valude is a preferred model)
+* Root Mean Squared Error of Approximation (RMSEA)
+	* Used very much currently
+	* Smaller values are better
+	* Comes with a confidence interval, which is part of the popularity
+	* **.05** is considered a standard threshold in the literature (.08 is an alternative)
+* Adjusted Goodness-of-Fit-Index (AGFI)
+	* The GFI is adjusted using *p* and *df* (unique var/cov = *p*)
+	* Not such a bad index
+	* Larger values = better fit
+
+#### Incremental
+
+View the world very differently. Compare the model against another model. A baseline model (null or independence model) is often the comparison. 
+
+Compare the fit of model to an independence model that claims no connections. 
+
+* Comparative Fit Index (CFI)
+* Normed Fit Index (NFI)
+* Non-normed Fit Index (NNFI)
+
+You should report 1 from each class: SRMR, RMSEA, and NNFI/CFI/NFI are a good combination
+
+### Model Comparisons
+
+Two main classes - nested and non-nested (hierarchical and non-hierarchical)
+
+* Compariative judgments about data-model fit are relative, not absolute. If neither model fits the data well, the comparison is meaningless. 
+
+
+# **SEM Workshop Day 2**
+## 1/8/2013
+## College Park, MD
+
+-----------------
+
+### Confirmatory Factor Analysis
+
+Does data support an a priori theory that includes structural links from latent factors (unmeasured variables) to measured variables?
+
+#### Exploratory Factor Analysis
+
+* Start off with the data
+* Explore the data to discover underlying factor structure 
+* PCA is an example of this
+
+PCA requires that factors are composites of their components, CFA does not require this
+
+#### Confirmatory Factor Analysis
+
+* Start with a theoretically derived, usually overidentified model
+* Start with a priori belief about the factors
+
+CFA has its roots in psychometrics - based on a belief that multiple measures are driven by some underlying structure/concept/latent. This is driven by theory/belief, but this is not the way to model **all models**. 
+
+Factors are denoted with an F in the *a-b-c* notation.
+
+How do we estimate these models when we don't have data on the factor that is important?
+
+We can leverage the model implied correlations between the common components of our latent variable. 
+
+Sometimes these equations are called measurement equations when they are reflecting a causal belief about a measurement of a factor.
+
+Factors are hard to identify, because they don't have units their variance is unknown, making solving the measurement equations untractable. 
+
+* Thus each latent variable must have an assigned unit of measurement
+	* either by standardization (most common)
+	* or by specifying a reference variable (sometimes called a marker variable)
+
+To do the latter, we drop in a 1 wherever the "marker" and/or reference variable appears in our structural equations
+
+
+*Empirical underidentification* can occure when the link between two parts of the model approaches zero, and that parameter was necessary for model identification.
+
+### Caveats for CFA
+
+* Make sure indicators measure a specific factor, do not just pigeon hole variables into categories -- there needs to be some strong theoretical ground to associate them together
+	* Just because they can be categorized does not mean they belong in a factor
+* Choose indicators to provide a fairly complete picture of the latent variable
+* Questionnaire items with ordered response categories should ideally have five or more categories when treated as interval
+* Use at three indicators per latent variable whenever possible
+* Consider the psychometric properties of the chosen indicator and the latent factors
+	* Construct Validity - Relates highly to what it should, and less to what it should not
+		* Examine the sign and magnitude of the factor loadings
+		* Examine the sign and magnitude of the inter-factor correlations
+		* Conduct a multitraint-multimethod (MTMM) analysis
+		* Check the "*variance extracted*" some say it should exceed .50 (but not everyone agress)
+		* This means the factor explains X% of the variance in the measured variables
+	* Construct Reliability
+		* Is the factor stable and replicable?
+		* *RC* is a measure of this (some don't like it)
+			* This measure is really about a sum of the loadings and thus negative loadings are penalizing the overall loading, which is not theoretically satisfying
+		* Negative loadings can be useful, and *RC* does not allow for that to be useful (they say this is reverse relationship between measure and factor)
+		* Additional indicators are not well incorporated in *RC* by punshing you for additional indicators that do not load well (which it should not, and this is not related to reliability)
+		* Sometimes *RC* can give a score that is worse than the reliability of any given measured variable, which does not make sense
+		* *coefficient H* is an alternative measure developed by (Hancock & Mueller, 2001)
+
+Sometimes factors should be explicitly restricted from being related. They should be modeled as *orthogonal*. Related factors are called *oblique*. 
+
+The *orthogonal model* is nested within the *oblique* model. 
+
+A *one-factor model* is nested within the *oblique factor model* as well. The one-factor model is a special case of the oblique model where the factor correlations are perfect (-1 or 1). 
+
+### Second Order and Residualized Factor Models
+
+A second-order factor is a latent variable that influences one or more other factors and does not possess any of its own measured indicators. First-order factors have measured indicators underlying them. 
+
+
+### Assessing Construct Validity
+#### Multitrait-multimethod Analysis
+
+* Convergent validity
+	* The tendency for *different methods* of measurement to converge upon the same trait or underlying construct
+* Discriminant Validity
+	* Ability to discriminate among *different traits* or constructs
+
+Compare models with *methods* and *traits* factors in different combinations. 
+
+### Latent Variable Path Analysis
+
+* For general SEM models
+	* t<= u
+		* *t* = total number of parameters
+		* *u* = p(p+1)/2 = number of unique variances/covariances of observed variables, where *p* = parameters
+	* All latent variables must have an assigned unit of measurement or be standardized
+
+
+We can parse our output a number of different ways, we can use:
+	
+* variables
+* composites
+* factors - in latent variable models we do this to parse our components into a factor that is the best possible measure of our construct
+
+### Specification Errors
+
+* External specification errors
+	* Were variables omitted
+		* Fit improves when estimating things that were previously fixed
+* Internal specification errors
+	* Structural relations 
+	* Does data-model fit erode when fixing a previously free parameter? *Wald Test*
+
+#### Two Step SEM  Can Help With This
+
+pp. 220-236
+
+### The Paradox of SEM Reliability
+
+*Hancock et al 2010ish...*
+
+1. Fit the saturated model
+2. Input the variance co-variance matrix for the saturated model and do a path analysis of the structural model using that matrix as data
+3. Then evaluate the model fit of that model to get a sense of the structural model fit
+
+
+### Multigroup Analysis in SEM
+
+A three step process
+
+1. Assess hypothesized model for each group
+2. Assess the model fit across all groups simultaneously
+3. Test group differences among individual parameters
+
+* Constrain all theoretically interesting parameters to be qual across groups
+* Sequentially release constraints if MIs or LM tests indicate a significant improvement in model fit. Do this one at a time. Indicates an inferred difference across groups. 
+
+### Real Data Challenges
+
+* Missing data methods
+* Continuous nonormality
+* Ordered categorical data
+* Complex samples
+
+### Missing Data
+
+#### Traditional Methods
+
+* Listwise deletion (throw whole case out if missing data occurs)
+* Pairwise deletion (leave anyone with whole case for the analysis available, different parts of covariance matrix may have different mixes of sample in them due to this)
+* Mean substitution (add a fixed variable in missing area, maybe including adding some random noise)
+* Regression imputation (predicting the variable with a random component)
+* Case matching imputation 
+
+#### Modern Methods
+
+* Expectation maximization
+* Multiple imputation
+* Full Information Maximum Likelihood (FIML), also referred to as Direct Maximum Likelihood
+
+SEM prefers FIML
+
+To deal with MAR data in SEM model, you can include *ancillary variables* (AV) that only influence the measured variables (pp. 348-355)
+
+### Data Issues
+
+SEM can accomodate
+
+* Multilevel data
+* Categorical data (ordered and unordered)
+* Complex sampling
+
+### Greg's Final Thoughts
+
+1. Model Conceptualization
+2. Path Diagram / Identification
+3. Structural Equations
+4. Model-implied Relations
+5. Identify Unknown Parameters
+6. Estimation (data-model fit)
+
+#### SEM The Process
+
+1. Model Conceptualization
+* Causal models are no better than the ideas that go into them, this conceptualization is so important to the work 
+* Strength is evaluating things *a priori*; not fishing for models, not exploratory
+* **Do not** test models that have been discovered through exploratory approach on the same dataset
+* Explicitly comparing multiple models can be a strength
+* Even a good data-model fit does not *confirm* the factor
+* Latent or emergent factors must be clarified and explicitly explained
+* Theoretically relevant control variables should be included directly in the model and not put into a factor
+	* should be allowed to covary and have structural paths to all exogenous and endogenous factors in the structural part of the model
+2. Parameter Identification
+* Cannot estimate more parameters than number of available variances/co-variances
+* Latent variables need a unit of measurement
+* 3 or more factors per latent variable is a good idea
+* Multicollinearity or estimates close to zero can cause empirical underidentification, **check this**
+3. Parameter Estimation
+* Check out missing data / outliers / nonormality / stratified and clustered sampling
+* Sample size high enough for 
+	* Correct parameter estimation
+	* Quality of factors
+	* **For ML 5 cases per parameter is recommended**
+* Desired level of statistical power
+* for both tests of overall data-model fit, and for tests of individual model parameters
+* Latent variable path model may be preferable to measured variable (even with additional parameters needed) because you can get more stability this way
+4. Data-model fit assessment
+ * Convergence failure can still occur - start values, rescale the parameters
+* Adjust negative error variances
+* Ridge regression corrections to adjust for nonpositive-definite matrices
+* Examine fit indices from three catgories (absolute, parsimonious, incremental)
+* Try not to over-fit the model, **parsimony is a virtue**
+* No model can be proven true, always exist equivalent models that produce identical fit
+5. Possible Model Modification
+* Remember that lower loadings yields better overall model-fit indices
+* As a consequence, two step modeling, 
+* Poorer quality measurement yields larger standard errors for structural parameters
+* Poorer quality measurement yields smaller modification indices for detecting structural parameters
+6. Communicating Results
+* APA recommends informationally adquate statistics are presented to facilitate verification of obtained results
+* Covariance matrix, sample size, correlation matrix, means, reliabilities, etc.
+* Access to data, contact the author, sharing the code
+* Dependent variables (coefficients of determination)
+* Direct structural and indirect structural effects (+ total effects)
+* Statistical significance
+* Construct validity
+* Construct reliability (p.318)
+* *the causality word* is not taboo here
+
+#### SEM is Powerful, but not a Panacea
+
+#### Advanced Topics
+
+* pp. 318-335 (advanced topics)
+
+

@@ -1,0 +1,259 @@
+SEM Course Notes
+========================================================
+## Professor Dan Bolt
+## Ed Sci 212 1-2:30pm
+
+
+```{r, echo=TRUE, results='hide', message=FALSE, warning=FALSE}
+library(lavaan)
+library(devtools)
+library(ggplot2)
+dev_mode()
+library(semPlot)
+```
+
+# March 14th, 2013
+### Confirmatory Factor Analysis
+### sem13.pdf
+
+```{r decathalon}
+decmatrix <- matrix(c(1, .59, .35, .34, .63, .40, .28, .2, .11, -.07,
+                      .59, 1, .42, .51, .49, .52, .31, .36, .21, .09, 
+                      .35, .42, 1, .38, .19, .36, .73, .24, .44, -.08, 
+                      .34, .51, .38, 1, .29, .46, .27, .39, .17, .18, 
+                      .63, .49, .19, .29, 1, .34, .17, .23, .13, .39, 
+                      .40, .52, .36, .46, .34, 1, .33, .32, .18, .00, 
+                      .28, .31, .73, .27, .17, .32, 1, .24, .34, -.02, 
+                      .20, .36, .24, .39, .23, .33, .24, 1, .24, -.02, 
+                      .11, .21, .44, .17, .13, .18, .34, .24, 1, .17, 
+                      -.07, .09, -.08, .18, .39, .00, -.02, -.17, 0, 1), 10, 10, byrow=TRUE)
+
+colnames(decmatrix) <- rownames(decmatrix) <- 
+  c("hund","lj", "sp", "hj","fourh", "h110", "disc", "pv", "jav", "r1500")
+
+myN<-230
+
+decmod2 <- ' speed =~ hund + lj + fourh + h110 + r1500  
+            strength =~ sp + disc + jav
+            jump =~ lj + hj + h110 +pv
+            endur =~ r1500 + fourh
+            endur~~ 0*speed
+            endur~~ 0*strength
+            endur~~ 0*jump
+            '
+decmodfit <- cfa(decmod2,sample.cov=decmatrix,sample.nobs=myN, mimic="EQS",
+                 sample.cov.rescale=FALSE, std.lv=FALSE)
+#summary(decmodfit)
+```
+
+
+How to do control variables in the model?
+
+One way to do this outside of the SEM framework is to transform the data before fitting the SEM model. We use the residual of the regression of the control variable predicting each variable in the dataset, and output the unstandardized residual associated with the analysis. 
+
+Then we calculate the covariance matrix of the residuals and analyze that as the data in the SEM framework. 
+
+We use this framework when we aren't interested in the effect of the control variable and we have a theoretical reason to not be interested in this. 
+
+#### Multigroup Analysis
+
+This is splitting the sample and then fitting multiple models for subsets of the data, but correlations and covariances are allowed across models, and tests can be done if parameters are equal between the models or differ from one another. 
+
+#### Validity and CFA
+
+- Criteria Related Validity
+  - Something
+- Construct validity
+  - Affirm the given measure is a valid measure of a construct
+
+
+# March 21st, 2013
+### Confirmatory Factor Analysis
+### sem15.pdf
+
+Some notes on the final project:
+
+Item grouping is an important concern. Model misfit is more likely the more parameters you load onto a factor. 
+
+You can create variable parcels by combining items into a group variable, which will decrease the chance of misfit and simplify issues of model fit. Composites of items make the categorical nature of the data less problematic because they behave more like continuous variables. 
+
+#### Multi-trait Multi-methods and CFA
+
+Unique validity variance $(U_{x_{i}\epsilon{j}})$ 
+
+$$(U_{x_{i}\epsilon{j}}) = R^{2}_{x_{i}} - R^{2}_{x_{i}\epsilon_{j}}$$
+
+To understand method and trait factors, you can use the square of the factor loading of the observed varaible on the method and the trait factors to explore the unique validity variance (defined above) for x.
+
+
+# April 2nd, 2013
+### Multigroup Measurement Models
+### No Notes
+
+
+Consider a regression analysis model: 
+
+$$\x_{i} = \tau_{i} + \lambda_{i}\xi + \delta_{i}$$
+
+With this $\tau$ represents the expected score on $x$ when $\xi = mean(\xi)$. In multigroup models we will add a parameter $\kappa$ that denotes the $mean(\xi)$. Thus we are expanding the LISREL model to include an augmented covariance matrix for the all the variables as well as a vector of the means for the variables. 
+
+
+
+# April 4th, 2013
+### Multigroup Measurement Models
+### No Notes
+
+$$r_{jk} = \frac{p_{jk} - p_{j}p_{k}}{\sqrt{p_j}(1-p_{j})p_{k}(1-p_{k})}$$
+
+This is with a binary categorical variable how we can calculate the correlation of them. 
+
+
+# April 16th, 2013
+### Full LISREL Model Combining Measruement and Structural Parts
+###
+
+$$x=\lambda_{x}\xi + \delta$$
+$$y=\lambda_{y}\eta + \epsilon$$
+
+And a structural part:
+
+$$\eta = \beta\eta + \gamma\xi + \Delta$$
+
+We have two identification rules for this hybrid model:
+
+1. *the t-rule*
+
+If the number of model parameters is **greater** than the number of unique elements of the covariance matrix, the model is not identified. This is a necessary but not sufficient condition for identification. 
+
+2. *Two-step rule* 
+
+- Step 1. Reformulate the model as strictly a measurement model. Verify that the 
+new measurement model is identified. 
+
+- Step 2. Regard the structural part of the model as if it were an observed 
+variable path analysis. Show that this model is identified. 
+
+If both of these are true, then the hybrid model is statistically identified. 
+
+# April 23rd, 2013
+### Latent Growth Curves
+### Notes
+
+Useful for modeling linear / quadratic processes: 
+
+```{r growthcurves}
+ages <- c(11, 12, 13, 14, 15)
+lgcdat <- data.frame(age = sample(ages, 100, replace=TRUE))
+lgcdat$tol <- 2.3 * lgcdat$age + rnorm(1, 25, 20)
+
+qplot(age, tol, data=lgcdat) + geom_jitter() + geom_smooth()
+```
+
+
+When we fit an LGC, we can interpret the correlations among the slope and 
+intercept factors. A high correlation means starting high leads to a lower than 
+expected or negative growth over time. 
+
+```{r LgCdata}
+myN <- 168
+
+lgmat <- matrix(c(3.17, 1.33, 1.75, 3.13, 2.30, 1.33, 3.95, 2.56, 2.36, 2.33, 1.75, 2.56, 7.24, 5.31, 4.79, 2.13, 2.36, 5.31, 8.57, 6.63, 2.3, 2.33, 4.79, 6.63, 8.73), 5,5, byrow=TRUE) 
+
+colnames(lgmat) <- rownames(lgmat) <-c("age11", "age12", "age13", "age14", "age15")
+
+lgmeans <- c(2.02, 2.26, 3.26, 4.17, 4.46)
+
+mymod <- "
+
+intercept =~ 1*age11 + 1*age12 + 1*age13 + 1*age14 + 1*age15
+
+slope =~ 0*age11 + 1*age12 + 2*age13 + 3*age14 + 4*age15
+
+slope ~~ 0*slope
+intercept ~~ intercept
+intercept ~~ 0*slope
+"
+
+lgmod <- growth(mymod, sample.cov=lgmat, sample.mean=lgmeans, sample.nobs=myN, 
+                mimic="EQS")
+
+```
+
+We can see this model:
+
+```{r}
+semPaths(lgmod, what="est", style="lisrel", rotation=4)
+```
+
+We can then fit random slope, random intercept and random slope and random intercept models to this data by manipulating the constraints on the factors. 
+
+We also can look at our modification indices to see if the residuals correlate and consider freeing up these parameters to recognize this. 
+
+In the model we can interpret the residuals of the observed variables as a measure of the reliability of the growth parameters at each point. If these drift then the linearity of the model can be called into question. 
+
+We can extend the model further by fitting a quadratic term to the model. This is the same basic principle as above. We create a new latent variable where time is squared, that is, the loadings are squared. 
+
+```{r quadlgc}
+
+mymod2 <- "
+
+intercept =~ 1*age11 + 1*age12 + 1*age13 + 1*age14 + 1*age15
+
+slope =~ 0*age11 + 1*age12 + 2*age13 + 3*age14 + 4*age15
+q =~ 0*age11 + 1*age12 + 4*age13 + 9*age14 + 16*age15
+
+slope ~~ 0*slope
+intercept ~~ intercept
+intercept ~~ 0*slope
+q ~~ q
+q ~~ 0*intercept + 0*slope
+"
+
+lgmodq <- growth(mymod2, sample.cov=lgmat, sample.mean=lgmeans, sample.nobs=myN, 
+                mimic="EQS")
+
+
+```
+
+Below is a quadratic model:
+
+```{r}
+semPaths(lgmodq, whatLabels="est", style="lisrel", rotation=4)
+```
+
+What if there are multiple variables we want to evaluate the curves of?
+
+We can imagine a factor of curves and a curves of factors model.
+
+In a **factor of curves** framework we can create two second order factors representing the intercept and slope of all of the first-order intercepts and slopes. We fix one of the slopes and one of the intercepts to have a loading of 1 to define the metrics of these second order factors. 
+
+Then we will investigate model fit and see if it is improved or not. If it is not improved then this approach is probably inappropriate. If the model does fit, then we can interpret how the first-order and second-order factors relate to one another, this can allow us to investigate which submeasure is the most influential about the overall factor. The standardized estimates allow us to do this in an apples to apples manner. 
+
+
+In a **curve of factors model** we can allow factors at each time point to be loaded, and then fit a trajectory to the factors that make up each timepoint. First-order factors will correspond to measures collected at a common timepoint, and then the second-order factor represents the growth trajectory of these first-order factors. 
+
+When we do this we have to let the factors to have correlated errors across time points. Obj 1 and Obj2 must correlate and so must Objb 1 and Objb 2. We can make this have structure to reduce estimation problems if this is necessary -- using structured time correlation. 
+
+# May 7th, 2013
+### Latent Growth Curves
+### Notes
+
+Can do multi level modeling where we specify a within and between group model to allow parameters to vary for within group relationships and between group relationships. 
+
+# May 9th, 2013
+### winBUGS 
+### Notes
+
+You can also do SEM using Bayesian methods. 
+
+Bayesian inference: 
+
+- Starting point is always specifying prior beliefs about the likely value of the parameters 
+- These are distributions that we specify
+- We then draw a sample from the distribution of the prior for the model parameters, and then see how the model fits
+- Monte Carlo methods are used to draw the sample MCMC methods include Hamiltonian Monte Carlo, Gibbs Sampling, No U Turn Sampling (NUTS)
+
+
+
+
+
