@@ -1,0 +1,19 @@
+Getting Started with Structural Equation Modeling
+========================================================
+
+## Jared E. Knowles
+## jknowles@gmail.com
+
+
+# Setting up your enviRonment
+
+Getting started using structural equation modeling (SEM) in R can be daunting. There are 
+lots of different packages for implementing SEM in R and there are different features 
+of SEM that a user might be interested in implementing. A few packages you might come 
+across can be found on the [CRAN Psychometrics Task View](http://cran.r-project.org/web/views/Psychometrics.html). 
+
+For those who want to just dive in the `lavaan` package seems to offer the most 
+comprehensive feature set for most SEM users and has a well thought out and easy 
+to learn syntax for describing SEM models. 
+
+
