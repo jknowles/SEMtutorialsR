@@ -14,6 +14,82 @@ across can be found on the [CRAN Psychometrics Task View](http://cran.r-project.
 
 For those who want to just dive in the `lavaan` package seems to offer the most 
 comprehensive feature set for most SEM users and has a well thought out and easy 
-to learn syntax for describing SEM models. 
+to learn syntax for describing SEM models. To install lavaan, we just run:
+
+```{r eval=FALSE, results='hide', echo=TRUE}
+# Main version
+install.packages("lavaan")
+
+# Or to install the dev version
+library(devtools)
+install_github("lavaan", "yrosseel")
+```
+
+```{r setup, echo=FALSE, error=FALSE, message=FALSE, eval=TRUE, results='hide'}
+opts_chunk$set(dev='svg', fig.width=3.75, fig.height=2.25, echo=TRUE, 
+               message=FALSE, error=FALSE)
+
+```
+
+# Read in the data
+
+Once we load up the lavaan package, we need to read in the dataset. `lavaan` accepts 
+two different types of data, either a standard R dataframe, or a variance-covariance 
+matrix. Since the latter is unfamiliar to us coming from the standard `lm` linear modeling 
+framework in R, we'll start with reading in the simplest variance-covariance matrix 
+possible and running a path analysis model. 
+
+```{r matrixinput1}
+library(lavaan)
+mat1 <- matrix(c(1, 0, 0, 0.6, 1, 0, 0.33, 0.63, 1), 3, 3, byrow = TRUE)
+
+colnames(mat1) <- rownames(mat1) <- c("ILL", "IMM", "DEP")
+
+myN <- 500
+print(mat1)
+```
+
+We could fit two models to this data:
+
+1. DEP influences IMM influences ILL
+2. IMM influences ILL influences DEP
 
 
+```{r twomodels}
+
+mod1 <- "ILL ~ IMM
+        IMM ~ DEP"
+
+mod1fit <- sem(mod1, sample.cov = mat1, sample.nobs = 500)
+
+mod2 <- "DEP ~ ILL
+             ILL ~ IMM"
+
+mod2fit <- sem(mod2, sample.cov = mat1, sample.nobs = 500)
+
+summary(mod1fit)
+summary(mod2fit)
+
+```
+
+
+One of the best ways to understand an SEM model is to inspect the model visually 
+using a path diagram. Luckily, this is easy to do in R:
+
+```{r modelvis}
+library(semPlot)
+semPaths(mod1fit, what="est", layout="tree", title=TRUE, style="LISREL")
+semPaths(mod2fit, what="est", layout="tree", title=TRUE, style="LISREL")
+```
+
+These two simple path models look great. 
+
+# Appendix
+
+```{r appendix}
+citation(package="lavaan")
+citation(package="semPlot")
+     
+sessionInfo()
+     
+```
