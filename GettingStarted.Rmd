@@ -4,6 +4,21 @@ Getting Started with Structural Equation Modeling
 ## Jared E. Knowles
 ## jknowles@gmail.com
 
+# Introduction
+
+For the analyst familiar with linear regression fitting structural equation models 
+can at first feel strange. In the R environment, fitting structural equation models 
+involves learning new modeling syntax, new plotting syntax, and often a new 
+data input method. However, a quick reorientation and soon the user is exposed 
+to the differences, fitting structural equation models can be a powerful tool in 
+the analyst's toolkit. 
+
+This tutorial will cover getting set up and running a few basic models using `lavaan` 
+in R.[1] Future tutorials will cover:
+
+* constructing latent variables
+* comparing alternate models 
+* multi-group analysis on larger datasets. 
 
 # Setting up your enviRonment
 
@@ -14,7 +29,7 @@ across can be found on the [CRAN Psychometrics Task View](http://cran.r-project.
 
 For those who want to just dive in the `lavaan` package seems to offer the most 
 comprehensive feature set for most SEM users and has a well thought out and easy 
-to learn syntax for describing SEM models. To install lavaan, we just run:
+to learn syntax for describing SEM models. To install `lavaan`, we just run:
 
 ```{r eval=FALSE, results='hide', echo=TRUE}
 # Main version
@@ -26,7 +41,7 @@ install_github("lavaan", "yrosseel")
 ```
 
 ```{r setup, echo=FALSE, error=FALSE, message=FALSE, eval=TRUE, results='hide'}
-opts_chunk$set(dev='svg', fig.width=3.75, fig.height=2.25, echo=TRUE, 
+opts_chunk$set(dev='svg', fig.width=6, fig.height=6, echo=TRUE, 
                message=FALSE, error=FALSE)
 
 ```
@@ -47,34 +62,70 @@ colnames(mat1) <- rownames(mat1) <- c("ILL", "IMM", "DEP")
 
 myN <- 500
 print(mat1)
+# Note that we only input the lower triangle of the matrix. This is sufficient
+# though we could put the whole matrix in if we like
 ```
 
-We could fit two models to this data:
+Now we have a variance-covariance matrix in our environment named `mat1` and a 
+variable `myN` corresponding to the number of observations in our dataset. Alternatively, 
+we could provide R with the full dataset and it can derive `mat1` and `myN` itself. 
 
-1. DEP influences IMM influences ILL
+With this data we can construct two possible models: 
+
+1. Depression (DEP) influences Immune System (IMM) influences Illness (ILL)
 2. IMM influences ILL influences DEP
 
+Using SEM we can evaluate which model best explains the covariances we observe in 
+our data above. Fitting models in `lavaan` is a two step process. First, we create 
+a text string that serves as the `lavaan` model and follows the `lavaan` [model 
+syntax](http://www.inside-r.org/packages/cran/lavaan/docs/model.syntax). Next, we 
+give `lavaan` the instructions on how to fit this model to the data using either the 
+`cfa`, `lavaan`, or `sem` functions. Here we will use the `sem` function. Other 
+functions will be covered in a future post. 
 
 ```{r twomodels}
+# Specify the model 
 
-mod1 <- "ILL ~ IMM
+mod1 <- "ILL ~ IMM 
         IMM ~ DEP"
 
+# Give lavaan the command to fit the model 
 mod1fit <- sem(mod1, sample.cov = mat1, sample.nobs = 500)
 
+# Specify model 2
+
 mod2 <- "DEP ~ ILL
-             ILL ~ IMM"
+        ILL ~ IMM"
 
 mod2fit <- sem(mod2, sample.cov = mat1, sample.nobs = 500)
-
-summary(mod1fit)
-summary(mod2fit)
-
 ```
 
+Now we have two objects stored in our environment for each model. We have the 
+model string and the modelfit object. The model fit objects (`mod1fit` and `mod2fit`) 
+are `lavaan` class objects. These are S4 objects with many supported methods, including 
+the `summary` method which provides a lot of useful output: 
+
+```{r modelsummaries}
+# Summarize the model fit
+summary(mod1fit)
+
+summary(mod2fit)
+```
 
 One of the best ways to understand an SEM model is to inspect the model visually 
-using a path diagram. Luckily, this is easy to do in R:
+using a path diagram. Thanks to the `semPlot` package, 
+this is easy to do in R.[2] First, install `semPlot`:
+
+```{r eval=FALSE, results='hide', echo=TRUE}
+# Official version
+install.packages("semPlot")
+
+# Or to install the dev version
+library(devtools)
+install_github("semPlot", "SachaEpskamp")
+```
+
+Next we load the library and make some path diagrams. 
 
 ```{r modelvis}
 library(semPlot)
@@ -82,14 +133,40 @@ semPaths(mod1fit, what="est", layout="tree", title=TRUE, style="LISREL")
 semPaths(mod2fit, what="est", layout="tree", title=TRUE, style="LISREL")
 ```
 
-These two simple path models look great. 
+These two simple path models look great. But which is better? We can run a simple 
+chi-square test on the `lavaan` objects `mod1fit` and `mod2fit`. 
+
+```{r modelcomparison}
+anova(mod1fit, mod2fit)
+```
+
+We can see that very clearly we prefer Model 2. Let's look at some properties of 
+model 2 that we can access through the `lavaan` object with convenience functions. 
+
+```{r modelexplore}
+# Goodness of fit measures
+fitMeasures(mod2fit)
+
+# Estimates of the model parameters
+parameterEstimates(mod2fit, ci=TRUE, boot.ci.type="norm")
+
+# Modification indices
+modindices(mod2fit, standardized=TRUE)
+```
+
+That's it. From inputing a variance-covariance matrix to fitting a model, 
+drawing a path diagram, comparing to alternate models, and finally inspecting 
+the parameters of the preferred model. `lavaan` is an amazing project which 
+adds great capabilities to R. These will be explored in future posts. 
 
 # Appendix
 
 ```{r appendix}
 citation(package="lavaan")
 citation(package="semPlot")
-     
 sessionInfo()
-     
 ```
+
+
+[1]: http://lavaan.ugent.be/ "The lavaan homepage"
+[2]: http://sachaepskamp.com/semPlot/ "The semPlot homepage"
