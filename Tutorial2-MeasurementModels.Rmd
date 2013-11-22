@@ -1,0 +1,15 @@
+Specifying and Fitting a Measurement Model in R
+========================================================
+
+# Introduction
+
+In our previous tutorial we covered how to set up your R environment in order to 
+fit structural equation models. Go ahead and review that now! For this section 
+we will be using the `lavaan` package and the `semPlot` package. [1]
+
+# An Example Problem
+
+Measurement models
+
+
+[1]: http://lavaan.ugent.be/ "The lavaan homepage"
