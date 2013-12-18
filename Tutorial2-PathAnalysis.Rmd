@@ -1,0 +1,89 @@
+Tutorial: Doing Path Analysis in R
+========================================================
+
+# Introduction
+
+In our previous tutorial we covered how to set up your R environment in order to 
+fit structural equation models. Go ahead and [review that now](http://jaredknowles.com/journal/2013/9/1/latent-variable-analysis-with-r-getting-setup-with-lavaan)! For this section 
+we will be using the `lavaan` package to fit models and the `semPlot` package to 
+diagram them. [1]
+
+In this example we are going to demonstrate how to do a path analysis using 
+structural equation modeling fit through R. Path analysis is a crucial component to
+learning [structural equation modeling](http://en.wikipedia.org/wiki/Structural_equation_modeling). 
+Path analysis is a **special case** of SEM in which there are no latent variables 
+constructed. 
+
+```{r setup, echo=FALSE, error=FALSE, message=FALSE, eval=TRUE, results='hide'}
+opts_chunk$set(dev='svg', fig.width=6, fig.height=6, echo=TRUE, 
+               message=FALSE, error=FALSE)
+
+```
+
+# An Example Problem
+
+Let's say we are at a bar discussing what data we need to collect to best 
+understand the speed of a car. You have a friend who suggests that all we need 
+to know is horsepower and we can figure out the quarter mile time for the vehicle. 
+Another friend suggests that we need to know the fuel efficiency, weight, and 
+then the horsepower. Another friend suggests the most parsimonious model is to 
+know horsepower and weight, the rest is irrelevant. 
+
+To settle this bet we collect the following data on the cars:
+
+```{r mtcars}
+data(mtcars)
+head(mtcars)
+```
+
+# What is path analysis?
+
+How can path analysis help us with this problem? Path analysis provides a way of 
+specifying multiple regression models on observed data and evaluating the paths 
+between the variables. For those who understand path analysis -- skip ahead -- 
+for those who are not familiar, let's look at the diagram below.
+
+```{r model1, include=FALSE}
+library(lavaan)
+
+mod1 <- "disp ~ cyl + wt 
+        mpg ~ disp + hp
+        "
+# Give lavaan the command to fit the model 
+mod1fit <- sem(mod1, data=mtcars)
+
+
+```
+
+
+```{r modelvis}
+library(semPlot)
+semPaths(mod1fit,"std", curvePivot = TRUE, exoVar = FALSE, 
+  exoCov = FALSE, layout="tree2", rotation=2)
+
+```
+
+Here we can see that weight and cylinder counts are positively related to 
+displacement. Displacement and horsepower are both negatively related to 
+miles per gallon. 
+
+# How do we specify it?
+
+```{r model2}
+
+mod2 <- "disp ~ cyl + wt 
+        mpg ~ disp + hp
+        qsec ~ wt + hp + mpg
+"
+# Give lavaan the command to fit the model 
+mod2fit <- sem(mod2, data=mtcars)
+
+
+```
+
+
+
+# Compare path analysis to other analyses
+
+
+[1]: http://lavaan.ugent.be/ "The lavaan homepage"
